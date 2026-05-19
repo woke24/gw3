@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>无轨迹圣诞雪花降落效果</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #0a192f; /* 圣诞深蓝背景，无渐变更干净 */
+        overflow: hidden;
+        min-height: 100vh;
+      }
+      #snowCanvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        pointer-events: none;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="height: 1000px; width: 100%">
+      <a href="./table.html">5555</a>
+    </div>
+    <canvas id="snowCanvas"></canvas>
+
+    <script>
+      // 雪花配置（极简版）
+      const SNOW_CONFIG = {
+        totalCount: 180, // 雪花总数
+        sizeRange: [1, 6], // 雪花大小范围
+        speedRange: [0.4, 1.8], // 下落速度范围
+        swingRange: [0.3, 1.2], // 摇摆幅度（轻微即可）
+      };
+
+      // 画布初始化
+      const canvas = document.getElementById("snowCanvas");
+      const fssCtx = canvas.getContext("2d");
+      let snowflakes = [];
+
+      function fssResizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+      fssResizeCanvas();
+      window.addEventListener("resize", fssResizeCanvas);
+
+      // 雪花类（无轨迹、无旋转、极简运动）
+      class Snowflake {
+        constructor() {
+          // 初始位置
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * -canvas.height;
+
+          // 基础属性（随机）
+          this.size =
+            Math.random() *
+              (SNOW_CONFIG.sizeRange[1] - SNOW_CONFIG.sizeRange[0]) +
+            SNOW_CONFIG.sizeRange[0];
+          this.speedY =
+            Math.random() *
+              (SNOW_CONFIG.speedRange[1] - SNOW_CONFIG.speedRange[0]) +
+            SNOW_CONFIG.speedRange[0];
+          this.swing =
+            Math.random() *
+              (SNOW_CONFIG.swingRange[1] - SNOW_CONFIG.swingRange[0]) +
+            SNOW_CONFIG.swingRange[0];
+
+          // 摇摆角度（仅基础正弦摆动，无多余参数）
+          this.angle = Math.random() * Math.PI * 2;
+        }
+
+        update() {
+          // 垂直下落（无额外速度）
+          this.y += this.speedY;
+          // 轻微左右摇摆（无轨迹、无微风）
+          this.x += Math.sin(this.angle) * this.swing;
+          this.angle += 0.01; // 固定摇摆速度，避免杂乱
+
+          // 出界重置
+          if (this.y > canvas.height) {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * -canvas.height;
+          }
+        }
+
+        // 绘制干净的六角雪花（无旋转、无透明渐变）
+        draw() {
+          // 更像雪花：六臂放射，每臂有两个小分支（简洁且性能友好）
+          const arms = 6;
+          const armLen = this.size;
+          const branchLen = armLen * 0.35;
+          const branchOffset = armLen * 0.45; // 分支距离中心的位置
+
+          fssCtx.beginPath();
+
+          // 绘制六个主臂（从中心向外）
+          for (let i = 0; i < arms; i++) {
+            const theta = (i * Math.PI) / 3;
+            const x2 = this.x + armLen * Math.cos(theta);
+            const y2 = this.y + armLen * Math.sin(theta);
+
+            // 主臂
+            fssCtx.moveTo(this.x, this.y);
+            fssCtx.lineTo(x2, y2);
+
+            // 两个对称分支（相对于主臂方向的 ±30°）
+            const branchAngle = Math.PI / 6; // 30°
+            const bx1 = this.x + branchOffset * Math.cos(theta);
+            const by1 = this.y + branchOffset * Math.sin(theta);
+
+            const b1x = bx1 + branchLen * Math.cos(theta - branchAngle);
+            const b1y = by1 + branchLen * Math.sin(theta - branchAngle);
+
+            const b2x = bx1 + branchLen * Math.cos(theta + branchAngle);
+            const b2y = by1 + branchLen * Math.sin(theta + branchAngle);
+
+            fssCtx.moveTo(bx1, by1);
+            fssCtx.lineTo(b1x, b1y);
+
+            fssCtx.moveTo(bx1, by1);
+            fssCtx.lineTo(b2x, b2y);
+          }
+
+          // 中心小圆点，增加雪花感
+          fssCtx.moveTo(this.x + 0.001, this.y);
+          fssCtx.arc(
+            this.x,
+            this.y,
+            Math.max(0.6, this.size * 0.12),
+            0,
+            Math.PI * 2
+          );
+
+          // 使用单次 stroke 保持线条一致性，再用 fill 填充中心
+          fssCtx.strokeStyle = "#ffffff";
+          fssCtx.lineWidth = Math.max(1, this.size * 0.12);
+          fssCtx.lineCap = "round";
+          fssCtx.stroke();
+
+          // 填充中心小圆（防止中心看起来空洞）
+          fssCtx.fillStyle = "#ffffff";
+          fssCtx.beginPath();
+          fssCtx.arc(
+            this.x,
+            this.y,
+            Math.max(0.6, this.size * 0.12),
+            0,
+            Math.PI * 2
+          );
+          fssCtx.fill();
+        }
+      }
+
+      // 生成雪花
+      function fssCreateSnowflakes() {
+        snowflakes = [];
+        for (let i = 0; i < SNOW_CONFIG.totalCount; i++) {
+          snowflakes.push(new Snowflake());
+        }
+      }
+
+      // 动画循环（完全清空画布，无轨迹）
+      function fssAnimate() {
+        // 彻底清空画布，无任何拖影/轨迹
+        fssCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // 绘制所有雪花
+        snowflakes.forEach((snowflake) => {
+          snowflake.update();
+          snowflake.draw();
+        });
+
+        requestAnimationFrame(fssAnimate);
+      }
+
+      // 启动
+      window.addEventListener("load", () => {
+        fssCreateSnowflakes();
+        fssAnimate();
+      });
+    </script>
+  </body>
+</html>

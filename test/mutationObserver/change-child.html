@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="form-container">
+        <!-- <input type="text" class="form-control" placeholder="输入内容">
+        <button id="submit-btn" disabled>提交</button> -->
+    </div>
+</body>
+</html>
+<script>
+    const formContainer = document.getElementById('form-container');
+
+// 1. 创建观察者实例
+const subtreeObserver = new MutationObserver((mutations) => {
+  console.log(`子树共发生 ${mutations.length} 处变化:`);
+  mutations.forEach(mutation => {
+    // 打印变化类型和受影响的节点
+    console.log(`- 类型: ${mutation.type}，节点:`, mutation.target);
+  });
+});
+
+// 2. 配置监听选项（监听子树所有变化）
+const config = {
+  childList: true,        // 子节点变化
+  attributes: true,       // 属性变化
+  characterData: true,    // 文本变化
+  subtree: true,          // 包含所有后代节点
+  attributeOldValue: true,
+  characterDataOldValue: true
+};
+
+// 3. 启动监听
+subtreeObserver.observe(formContainer, config);
+
+// 模拟子树变化（测试用）
+setTimeout(() => {
+  // 添加子元素
+  const input = document.createElement('input');
+  input.type = 'text';
+  input.placeholder = '新增输入框';
+  formContainer.appendChild(input);
+}, 1000);
+
+setTimeout(() => {
+  // 修改子元素属性
+  const input = formContainer.querySelector('input');
+  input.classList.add('form-control');
+}, 2000);
+
+setTimeout(() => {
+  // 修改子元素文本（假设存在一个 <span>）
+  const span = document.createElement('span');
+  span.textContent = '表单提示';
+  formContainer.appendChild(span);
+  setTimeout(() => {
+    span.textContent = '修改后的提示';
+  }, 500);
+}, 3000);
+</script>

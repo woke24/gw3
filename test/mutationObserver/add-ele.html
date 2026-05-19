@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+<ul id="dynamic-list"></ul>
+</body>
+
+
+
+</html>
+<script>
+// 目标容器（假设页面中有 <ul id="dynamic-list"></ul>）
+const listContainer = document.getElementById('dynamic-list');
+
+// 1. 创建观察者实例
+const childListObserver = new MutationObserver((mutations) => {
+  mutations.forEach(mutation => {
+    // 处理新增的节点
+    mutation.addedNodes.forEach(node => {
+      if (node.nodeType === 1) { // 仅处理元素节点
+        console.log(`新增元素: ${node.tagName}，内容: ${node.textContent}`);
+        // 可为新增元素绑定事件
+        node.addEventListener('click', () => {
+          alert(`点击了: ${node.textContent}`);
+        });
+      }
+    });
+
+    // 处理删除的节点
+    mutation.removedNodes.forEach(node => {
+      if (node.nodeType === 1) {
+        console.log(`删除元素: ${node.tagName}，内容: ${node.textContent}`);
+      }
+    });
+  });
+});
+
+// 2. 配置监听选项（监听直接子节点变化）
+const config = {
+  childList: true, // 监听子节点变化
+  subtree: false   // 不监听后代节点（仅直接子节点）
+};
+
+// 3. 启动监听
+childListObserver.observe(listContainer, config);
+
+// 模拟动态添加/删除元素（测试用）
+setTimeout(() => {
+  const item1 = document.createElement('li');
+  item1.textContent = '动态项 1';
+  listContainer.appendChild(item1);
+}, 1000);
+
+setTimeout(() => {
+  const item2 = document.createElement('li');
+  item2.textContent = '动态项 2';
+  listContainer.appendChild(item2);
+}, 2000);
+
+setTimeout(() => {
+  listContainer.removeChild(listContainer.firstChild); // 删除第一个子元素
+}, 3000);
+
+// 4. （可选）5秒后停止监听
+setTimeout(() => {
+  childListObserver.disconnect();
+  console.log('已停止监听子元素变化');
+}, 5000);
+</script>

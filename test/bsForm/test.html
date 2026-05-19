@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR Training Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                display: flex;
+            }
+            
+            .left-column, .right-column {
+                width: 50%;
+            }
+        }
+
+        .left-column {
+            background-color: #f9fafb;
+            padding: 40px;
+        }
+
+        .right-column {
+            padding: 40px;
+        }
+
+        .star-rating {
+            color: #ffb800;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+        }
+
+        .star-rating span {
+            color: #333;
+            margin: 0 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            color: #1a1a1a;
+            line-height: 1.2;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            list-style: none;
+        }
+
+        .features li {
+            margin-bottom: 15px;
+            color: #333;
+            display: flex;
+            align-items: start;
+        }
+
+        .features li:before {
+            content: "✓";
+            color: #165dff;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-size: 0.9rem;
+            color: #444;
+            font-weight: 500;
+        }
+
+        input, textarea {
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #165dff;
+            box-shadow: 0 0 0 2px rgba(22, 93, 255, 0.2);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #165dff;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        button:hover {
+            background-color: #0e47d0;
+        }
+
+        @media (max-width: 767px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .left-column, .right-column {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <div class="star-rating">
+                ★★★★★<span>Google</span>★★★★★★
+            </div>
+            
+            <h1>Discover the highest rated VR training platform</h1>
+            
+            <p class="subtitle">
+                Fill in your details and a product expert will reach out shortly to arrange a free 30-minute demo call. Here's what to expect:
+            </p>
+            
+            <ul class="features">
+                <li>A personalized walkthrough of Warp VR</li>
+                <li>Tailored advice on immersive learning for your organization</li>
+                <li>Any of your questions answered</li>
+            </ul>
+        </div>
+        
+        <div class="right-column">
+            <form>
+                <div class="form-group">
+                    <label for="fullname">Full name</label>
+                    <input type="text" id="fullname" placeholder="Your name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company name</label>
+                    <input type="text" id="company" placeholder="Your company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Company email address</label>
+                    <input type="email" id="email" placeholder="email@example.com">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Type your message...</label>
+                    <textarea id="message" placeholder="Type your message..."></textarea>
+                </div>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 简单的表单验证
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value.trim();
+            const company = document.getElementById('company').value.trim();
+            const email = document.getElementById('email').value.trim();
+            
+            if (!fullname || !company || !email) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // 简单的邮箱格式验证
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // 实际应用中这里会发送数据到服务器
+            alert('Thank you for your submission! A product expert will contact you shortly.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
+    

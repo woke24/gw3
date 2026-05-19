@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body></body>
+</html>
+<script>
+  document.querySelectorAll(".card").forEach((card) => {
+    gsap.set(card, { transformOrigin: "center bottom" }); // 设置变形原点
+    card.addEventListener("mouseenter", () => {
+      gsap.to(card, {
+        y: -6,
+        boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
+        duration: 0.3,
+        ease: "power1.out",
+      });
+    });
+    card.addEventListener("mouseleave", () => {
+      gsap.to(card, {
+        y: 0,
+        boxShadow: "0 4px 8px rgba(0,0,0,0.08)",
+        duration: 0.3,
+        ease: "power1.in",
+      });
+    });
+  });
+</script>

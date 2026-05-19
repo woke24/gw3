@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP TextPlugin 特效展示</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 800px;
+        width: 100%;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 40px;
+        font-size: 2rem;
+      }
+
+      .demo-section {
+        margin: 30px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .demo-title {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 15px;
+        font-weight: 600;
+      }
+
+      .demo-content {
+        font-size: 2rem;
+        color: #667eea;
+        font-weight: bold;
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+      }
+
+      .price {
+        font-size: 2.5rem;
+        color: #28a745;
+      }
+
+      button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin-top: 15px;
+        transition: background 0.3s ease;
+      }
+
+      button:hover {
+        background: #5a67d8;
+      }
+
+      .controls {
+        text-align: center;
+        margin-top: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>GSAP TextPlugin 特效展示</h1>
+
+      <div class="demo-section">
+        <div class="demo-title">数字滚动效果</div>
+        <div class="demo-content">销量：<span class="sales-count">0</span></div>
+      </div>
+
+      <div class="demo-section">
+        <div class="demo-title">价格动画效果</div>
+        <div class="demo-content">
+          <span class="price">$0</span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button onclick="restartAnimations()">重新播放动画</button>
+      </div>
+    </div>
+
+    <script>
+      gsap.registerPlugin(TextPlugin);
+
+      function startAnimations() {
+        // 1. 数字滚动（从0到9999，2秒完成）
+        gsap.to(".sales-count", {
+          duration: 2,
+          textContent: 9999,
+          ease: "power1.out",
+          snap: { textContent: 1 }, // 整数滚动，不显示小数
+        });
+
+        // 3. 价格格式化（从0到199.99，保留2位小数）
+        gsap.to(".price", {
+          duration: 1.2,
+          textContent: 199.99,
+          ease: "power2.out",
+          snap: { textContent: 0.01 }, // 保留2位小数
+          onUpdate: function () {
+            // 格式化货币符号
+            this.targets()[0].textContent = "$" + this.targets()[0].textContent;
+          },
+        });
+      }
+
+      function restartAnimations() {
+        // 重置所有值
+        gsap.set(".sales-count", { textContent: 0 });
+        gsap.set(".price", { textContent: "$0" });
+
+        // 重新开始动画
+        startAnimations();
+      }
+
+      // 页面加载时自动开始动画
+      window.addEventListener("load", startAnimations);
+    </script>
+  </body>
+</html>

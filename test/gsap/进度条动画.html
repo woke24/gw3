@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP Progress Bar Animations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        padding: 40px;
+        background-color: #f5f5f5;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 40px;
+        color: #333;
+      }
+
+      .progress-section {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+      }
+
+      .progress-item {
+        margin-bottom: 25px;
+      }
+
+      .progress-label {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .progress-bar {
+        height: 20px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .progress-fill {
+        height: 100%;
+        width: 0;
+        border-radius: 10px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-fill::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transform: translateX(-100%);
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes shimmer {
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      /* 不同颜色的进度条 */
+      .progress-fill.blue {
+        background-color: #2196f3;
+      }
+
+      .progress-fill.green {
+        background-color: #4caf50;
+      }
+
+      .progress-fill.orange {
+        background-color: #ff9800;
+      }
+
+      .progress-fill.purple {
+        background-color: #9c27b0;
+      }
+
+      .progress-fill.red {
+        background-color: #f44336;
+      }
+
+      /* 圆形进度条 */
+      .circular-progress {
+        width: 120px;
+        height: 120px;
+        margin: 20px auto;
+        position: relative;
+      }
+
+      .circular-progress svg {
+        transform: rotate(-90deg);
+      }
+
+      .circular-progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+      }
+
+      /* 控制按钮 */
+      .controls {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 6px;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+        font-size: 16px;
+        transition: transform 0.2s;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      /* 波浪进度条 */
+      .wave-progress {
+        position: relative;
+        height: 100px;
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+
+      .wave {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        background-color: #2196f3;
+        transition: height 1s ease;
+      }
+
+      .wave::before,
+      .wave::after {
+        content: "";
+        position: absolute;
+        width: 200%;
+        height: 100%;
+        top: -50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      .wave::before {
+        border-radius: 45%;
+        background: rgba(255, 255, 255, 0.5);
+        animation: wave 5s linear infinite;
+      }
+
+      .wave::after {
+        border-radius: 40%;
+        background: rgba(255, 255, 255, 0.3);
+        animation: wave 10s linear infinite;
+      }
+
+      @keyframes wave {
+        0% {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        100% {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>GSAP 进度条动画示例</h1>
+
+      <!-- 基础进度条 -->
+      <div class="progress-section">
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>项目进度</span>
+            <span class="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill blue"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>销售目标</span>
+            <span class="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill green"></div>
+          </div>
+        </div>
+
+        <div class="progress-item">
+          <div class="progress-label">
+            <span>用户增长</span>
+            <span class="progress-percent">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill orange"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 圆形进度条 -->
+      <div class="progress-section">
+        <div class="circular-progress">
+          <svg width="120" height="120">
+            <circle
+              cx="60"
+              cy="60"
+              r="54"
+              stroke="#f0f0f0"
+              stroke-width="12"
+              fill="none"
+            />
+            <circle
+              class="progress-circle"
+              cx="60"
+              cy="60"
+              r="54"
+              stroke="#9C27B0"
+              stroke-width="12"
+              fill="none"
+              stroke-dasharray="339.292"
+              stroke-dashoffset="339.292"
+            />
+          </svg>
+          <div class="circular-progress-text">0%</div>
+        </div>
+      </div>
+
+      <!-- 波浪进度条 -->
+      <div class="progress-section">
+        <div class="wave-progress">
+          <div class="wave"></div>
+        </div>
+        <div class="progress-label" style="margin-top: 10px">
+          <span>水位进度</span>
+          <span class="wave-percent">0%</span>
+        </div>
+      </div>
+
+      <!-- 控制按钮 -->
+      <div class="controls">
+        <button class="btn" onclick="startAnimation()">开始动画</button>
+        <button class="btn" onclick="resetAnimation()">重置</button>
+      </div>
+    </div>
+
+    <script>
+      // 线性进度条动画
+      function animateProgress(bar, percent, label) {
+        gsap.to(bar, {
+          width: percent + "%",
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: function () {
+            label.textContent = Math.ceil(this.progress() * percent) + "%";
+          },
+        });
+      }
+
+      // 圆形进度条动画
+      function animateCircularProgress(circle, text, percent) {
+        const circumference = 2 * Math.PI * 54; // 圆的周长
+        const offset = circumference - (percent / 100) * circumference;
+
+        gsap.to(circle, {
+          strokeDashoffset: offset,
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: function () {
+            const currentPercent = Math.ceil(
+              (1 - this.targets()[0].strokeDashoffset / circumference) * 100
+            );
+            text.textContent = currentPercent + "%";
+          },
+        });
+      }
+
+      // 波浪进度条动画
+      function animateWave(wave, percent, label) {
+        gsap.to(wave, {
+          height: percent + "%",
+          duration: 2,
+          ease: "power2.out",
+          onUpdate: function () {
+            label.textContent = Math.ceil(this.progress() * percent) + "%";
+          },
+        });
+      }
+
+      // 开始所有动画
+      function startAnimation() {
+        // 线性进度条
+        const progressBars = document.querySelectorAll(".progress-fill");
+        const progressLabels = document.querySelectorAll(".progress-percent");
+        const percentages = [75, 85, 60];
+
+        progressBars.forEach((bar, index) => {
+          animateProgress(bar, percentages[index], progressLabels[index]);
+        });
+
+        // 圆形进度条
+        const circle = document.querySelector(".progress-circle");
+        const circleText = document.querySelector(".circular-progress-text");
+        animateCircularProgress(circle, circleText, 80);
+
+        // 波浪进度条
+        const wave = document.querySelector(".wave");
+        const waveLabel = document.querySelector(".wave-percent");
+        animateWave(wave, 65, waveLabel);
+      }
+
+      // 重置所有动画
+      function resetAnimation() {
+        // 重置线性进度条
+        gsap.set(".progress-fill", { width: 0 });
+        document.querySelectorAll(".progress-percent").forEach((label) => {
+          label.textContent = "0%";
+        });
+
+        // 重置圆形进度条
+        gsap.set(".progress-circle", { strokeDashoffset: 339.292 });
+        document.querySelector(".circular-progress-text").textContent = "0%";
+
+        // 重置波浪进度条
+        gsap.set(".wave", { height: 0 });
+        document.querySelector(".wave-percent").textContent = "0%";
+      }
+
+      // 页面加载时自动开始动画
+      window.addEventListener("load", () => {
+        setTimeout(startAnimation, 500);
+      });
+    </script>
+  </body>
+</html>

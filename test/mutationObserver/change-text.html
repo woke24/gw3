@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文本变化监听示例</title>
+</head>
+<body>
+    <!-- 确保页面中存在目标元素 -->
+    <div id="counter">0</div>
+
+    <script>
+        // 等待DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 目标元素
+            const counterDisplay = document.getElementById('counter');
+            
+            if (!counterDisplay) {
+                console.error('未找到id为"counter"的元素');
+                return;
+            }
+
+            // 1. 创建观察者实例
+            const textObserver = new MutationObserver((mutations) => {
+                mutations.forEach(mutation => {
+                    const oldValue = mutation.oldValue;
+                    const newValue = mutation.target.textContent;
+                    console.log(`文本变化: 旧值=${oldValue}，新值=${newValue}`);
+
+                    // 示例：当数值超过 5 时给出提示
+                    if (parseInt(newValue) > 5) {
+                        alert(`数值已超过 5，当前值: ${newValue}`);
+                    }
+                });
+            });
+
+            // 2. 配置监听选项（监听文本内容）
+            const config = {
+                characterData: true,         // 监听文本内容变化
+                characterDataOldValue: true, // 记录文本变化前的值
+                subtree: false               // 仅监听目标元素自身
+            };
+
+            // 3. 启动监听（注意：文本节点需监听其 nodeValue 变化）
+            textObserver.observe(counterDisplay.firstChild, config);
+
+            // 模拟文本变化（测试用：每秒递增计数器）
+            let count = 0;
+            const timer = setInterval(() => {
+                count++;
+                counterDisplay.textContent = count; // 更新文本内容
+                if (count >= 10) clearInterval(timer);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+    

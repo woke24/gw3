@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body></body>
+</html>
+<script>
+  // 页面加载完成后，元素按顺序渐入
+  gsap.from(".section > div", {
+    opacity: 0,
+    y: 30, // 从下方30px处上来
+    stagger: 0.1, // 每个元素延迟0.1s执行，形成序列动画
+    duration: 0.6,
+    ease: "power2.out",
+    delay: 0.2, // 页面加载后延迟0.2s开始
+  });
+
+  // 滚动到元素时，执行渐入动画
+  // gsap.registerPlugin(ScrollTrigger);
+
+  // document.querySelectorAll('.animate-on-scroll').forEach(el => {
+  // gsap.from(el, {
+  //     opacity: 0,
+  //     x: -50, // 从左侧滑入
+  //     duration: 0.8,
+  //     ease: 'power2.out',
+  //     scrollTrigger: {
+  //     trigger: el, // 触发元素
+  //     start: 'top 80%', // 元素顶部到达视口80%时开始
+  //     toggleActions: 'play none none reverse' // 滚动到触发/离开时的行为
+  //     }
+  // });
+  // });
+</script>

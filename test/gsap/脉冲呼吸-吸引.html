@@ -1,0 +1,228 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP Pulse Animations</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f0f0f0;
+        gap: 30px;
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+
+      .btn {
+        padding: 15px 30px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.2s;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .buy-now-btn {
+        background-color: #4caf50;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .subscribe-btn {
+        background-color: #2196f3;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .download-btn {
+        background-color: #ff9800;
+        color: white;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .pulse-icon {
+        width: 60px;
+        height: 60px;
+        background-color: #9c27b0;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-size: 24px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .pulse-card {
+        width: 200px;
+        padding: 20px;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .pulse-card h3 {
+        margin-bottom: 10px;
+        color: #333;
+      }
+
+      .pulse-card p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      /* 波纹效果 */
+      .ripple {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        transform: scale(0);
+        animation: ripple-animation 0.6s ease-out;
+      }
+
+      @keyframes ripple-animation {
+        to {
+          transform: scale(4);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 基础脉冲按钮 -->
+    <button class="btn buy-now-btn">立即购买</button>
+
+    <!-- 彩虹脉冲按钮 -->
+    <button class="btn subscribe-btn">订阅更新</button>
+
+    <!-- 阴影脉冲按钮 -->
+    <button class="btn download-btn">下载资源</button>
+
+    <!-- 脉冲图标 -->
+    <div class="pulse-icon">♥</div>
+
+    <!-- 脉冲卡片 -->
+    <div class="pulse-card">
+      <h3>特别优惠</h3>
+      <p>限时折扣，不容错过！</p>
+    </div>
+
+    <script>
+      // 基础脉冲动画
+      function pulseAnimation(el) {
+        gsap.to(el, {
+          scale: 0.95,
+          duration: 0.5,
+          ease: "power1.inOut",
+          repeat: -1,
+          yoyo: true,
+        });
+      }
+
+      // 彩虹脉冲动画
+      function rainbowPulseAnimation(el) {
+        gsap.to(el, {
+          scale: 1.1,
+          duration: 0.8,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true,
+          backgroundColor: "#E91E63",
+          color: "white",
+          onUpdate: function () {
+            const colors = ["#2196F3", "#4CAF50", "#FF9800", "#E91E63"];
+            const progress = this.progress();
+            const colorIndex =
+              Math.floor(progress * colors.length) % colors.length;
+            gsap.set(el, {
+              backgroundColor: colors[colorIndex],
+            });
+          },
+        });
+      }
+
+      // 阴影脉冲动画
+      function shadowPulseAnimation(el) {
+        gsap.to(el, {
+          scale: 1.05,
+          duration: 1,
+          ease: "power1.inOut",
+          repeat: -1,
+          yoyo: true,
+          boxShadow: "0 8px 12px rgba(0, 0, 0, 0.2)",
+        });
+      }
+
+      // 图标脉冲动画
+      function iconPulseAnimation(el) {
+        gsap.to(el, {
+          scale: 1.2,
+          duration: 0.6,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true,
+          rotation: 5,
+        });
+      }
+
+      // 卡片脉冲动画
+      function cardPulseAnimation(el) {
+        gsap.to(el, {
+          scale: 1.02,
+          duration: 1.5,
+          ease: "power2.inOut",
+          repeat: -1,
+          yoyo: true,
+          boxShadow: "0 8px 16px rgba(0, 0, 0, 0.1)",
+        });
+      }
+
+      // 添加波纹效果
+      function addRippleEffect(el) {
+        el.addEventListener("click", function (e) {
+          const ripple = document.createElement("span");
+          ripple.classList.add("ripple");
+
+          const rect = this.getBoundingClientRect();
+          const size = Math.max(rect.width, rect.height);
+          const x = e.clientX - rect.left - size / 2;
+          const y = e.clientY - rect.top - size / 2;
+
+          ripple.style.width = ripple.style.height = size + "px";
+          ripple.style.left = x + "px";
+          ripple.style.top = y + "px";
+
+          this.appendChild(ripple);
+
+          setTimeout(() => ripple.remove(), 600);
+        });
+      }
+
+      // 初始化所有动画
+      document.addEventListener("DOMContentLoaded", () => {
+        // 应用不同的脉冲效果
+        pulseAnimation(document.querySelector(".buy-now-btn"));
+        rainbowPulseAnimation(document.querySelector(".subscribe-btn"));
+        shadowPulseAnimation(document.querySelector(".download-btn"));
+        iconPulseAnimation(document.querySelector(".pulse-icon"));
+        cardPulseAnimation(document.querySelector(".pulse-card"));
+
+        // 为所有按钮添加波纹效果
+        document.querySelectorAll(".btn").forEach(addRippleEffect);
+      });
+    </script>
+  </body>
+</html>

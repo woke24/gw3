@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系我们</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+    }
+
+    .page-wrapper {
+      padding: 40px 20px;
+    }
+
+    .contact-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: row;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .left-panel, .right-panel {
+      padding: 60px;
+      flex: 1;
+    }
+    
+    .left-panel {
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+    }
+    
+    .rating {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        color: #ffc107;
+    }
+
+    .rating span {
+        margin-left: 10px;
+        font-weight: bold;
+    }
+
+    .rating .star {
+        font-size: 1.5em;
+    }
+
+    .left-panel h1 {
+      font-size: 2.8em;
+      font-weight: 700;
+      color: #1a1a1a;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .left-panel p {
+      font-size: 1.1em;
+      color: #555;
+      margin-bottom: 30px;
+    }
+
+    .left-panel ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .left-panel li {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+      color: #444;
+      margin-bottom: 15px;
+    }
+
+    .left-panel .checkmark {
+      color: #007bff;
+      font-size: 1.2em;
+      font-weight: bold;
+      margin-right: 15px;
+    }
+
+    /* 右侧表单样式 */
+    .right-panel form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .right-panel label {
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+    }
+
+    .right-panel input,
+    .right-panel textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      box-sizing: border-box; /* 确保内边距和边框不影响宽度 */
+      font-size: 1em;
+    }
+
+    .right-panel textarea {
+      resize: vertical;
+    }
+
+    .submit-button {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 15px 25px;
+      font-size: 1.1em;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* 响应式设计 */
+    @media (max-width: 992px) {
+      .contact-container {
+        flex-direction: column;
+        width: 90%;
+      }
+      .left-panel, .right-panel {
+        padding: 40px;
+      }
+      .left-panel h1 {
+        font-size: 2em;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .left-panel, .right-panel {
+        padding: 30px 20px;
+      }
+      .left-panel h1 {
+        font-size: 1.8em;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="contact-container">
+    <div class="left-panel">
+      <div class="rating">
+        <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+        <span>Google ★★★★★</span>
+      </div>
+      <h1>Discover the highest rated VR training platform</h1>
+      <p>Fill in your details and a product expert will reach out shortly to arrange a free 30-minute demo call. Here's what to expect:</p>
+      <ul>
+        <li><span class="checkmark">&#10003;</span> A personalized walkthrough of Warp VR</li>
+        <li><span class="checkmark">&#10003;</span> Tailored advice on immersive learning for your organization</li>
+        <li><span class="checkmark">&#10003;</span> Any of your questions answered</li>
+      </ul>
+    </div>
+    
+    <div class="right-panel">
+      <form action="#" method="post">
+        <label for="fullName">Full name</label>
+        <input type="text" id="fullName" name="fullName" placeholder="Your name" required>
+        
+        <label for="companyName">Company name</label>
+        <input type="text" id="companyName" name="companyName" placeholder="Your company">
+        
+        <label for="email">Company email address</label>
+        <input type="email" id="email" name="email" placeholder="email@example.com" required>
+        
+        <label for="message">Type your message...</label>
+        <textarea id="message" name="message" rows="8" placeholder="Type your message..." required></textarea>
+        
+        <button type="submit" class="submit-button">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

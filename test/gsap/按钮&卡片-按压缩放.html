@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  </head>
+  <body>
+    <button>555555</button>
+  </body>
+</html>
+<script>
+  document.querySelectorAll("button").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      gsap.to(btn, {
+        scale: 0.95, // 按压时缩小
+        duration: 0.1,
+        ease: "power1.in", // power1:缓动效果,in:慢到块，out:块到慢，inOut:慢到块到慢
+        onComplete: () => {
+          gsap.to(btn, { scale: 1, duration: 0.15, ease: "power1.out" }); // 回弹
+        },
+      });
+    });
+  });
+</script>
