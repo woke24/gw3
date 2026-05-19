@@ -1,0 +1,240 @@
+@import './transition.scss';
+// @import '@/theme/index.scss';
+/* 针对 WebKit/Chromium */
+::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* 针对 Firefox */
+* {
+  scrollbar-width: none;
+}
+
+/* 针对 IE/Edge Legacy */
+* {
+  -ms-overflow-style: none;
+}
+.layout-container {
+  background-color: var(--system-container-main-background);
+  width: calc(100% - 30px);
+  height: calc(100% - 30px);
+  margin: 15px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  &-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 15px 0;
+    &-handle {
+      display: flex;
+      justify-content: flex-start;
+      .export-excel-btn {
+        margin-left: 15px;
+      }
+    }
+    &-search {
+      display: flex;
+      justify-content: flex-end;
+      .search-btn {
+        margin-left: 15px;
+      }
+    }
+    .el-form-item {
+      margin-bottom: 0;
+    }
+  }
+  &-table {
+    flex: 1;
+    height: 100%;
+    padding: 15px;
+    overflow: auto;
+  }
+}
+.flex-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.flex {
+  display: flex;
+}
+.center {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+a {
+  text-decoration: none;
+}
+
+/** element-plus **/
+.el-icon {
+  text-align: center;
+}
+
+/** 用于提示信息 **/
+.my-tip {
+  background-color: #f1f1f1;
+  padding: 5px 10px;
+  text-align: left;
+  border-radius: 4px;
+}
+.system-scrollbar {
+  &::-webkit-scrollbar {
+    display: none;
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: rgba(144, 147, 153, 0.3);
+  }
+  &:hover {
+    &::-webkit-scrollbar {
+      display: block;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: rgba(144, 147, 153, 0.3);
+      &:hover {
+        background: rgba(144, 147, 153, 0.5);
+      }
+    }
+  }
+}
+/*页面公共样式*/
+.app-container {
+  width: 100%;
+  height: 100%;
+}
+.pd20 {
+  padding: 20px;
+}
+
+// GW3公共样式设置
+:root {
+  // 品牌色
+  --brand-color: #05C3DE; 
+  --brand-black-color: #3D3935; 
+  // 背景色
+  --main-bg-color: #1A2A3D;
+  --nav-bg-color: #171D25;
+  --sidebar-bg-color: #20232E;
+  --secondary-bg-color: #272D37;
+  // 中性色
+  --title-color: #FFFFFF;
+  --text-color: #C5CBD8;
+  --divider-color: #67707B;
+  // 功能色
+  --success-bg-color: #34C759;
+  --error-bg-color: #EA0000;
+  --warning-bg-color: #FFC107;
+  --fail-bg-color: #8E8E93;
+  // 字体
+  --title-family: Semibold;
+  --body-family: Regular;
+  --text-family: Inter;
+  --title-font-size: 16px;
+  --body-font-size: 12px;
+  --footnote-font-size: 10px;
+  // 间距
+  --big-distance: 24px;    // 页面内边距
+  --middle-distance: 16px; // 导航栏内导航、设备状态之间
+  --small-distance: 12px;  // 卡片、模块之间（如游戏列表）
+  --mini-distance: 8px;    // 按钮间距
+}
+.title {
+  font-family: var(--title-family);
+  color: var(--title-color);
+  font-size: var(--title-font-size);
+}
+.text {
+  font-family: var(--body-family);
+  color: var(--text-color);
+  font-size: var(--body-font-size);
+}
+.footnote {
+  font-family: var(--body-family);
+  color: var(--text-color);
+  font-size: var(--footnote-font-size);
+}
+* {
+  box-sizing: border-box;
+}
+.dark-input {
+  --el-input-text-color: var(--text-color);
+  --el-input-bg-color: rgba(103, 112, 123, 0.3);
+  .el-input-group__append {
+    background: rgba(103, 112, 123, 0.3);
+    box-shadow: unset;
+  }
+  .el-icon{
+    font-size: 16px;
+    color: var(--text-color);
+  }
+  .el-input__wrapper {
+    box-shadow: unset;
+  }
+  .el-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.dark-select {
+  .el-select__wrapper {
+    background-color: var(--secondary-bg-color);
+    box-shadow: unset;
+    font-size: 12px;
+  }
+  .el-select, .el-select__placeholder {
+    --el-select-input-color: var(--text-color);
+    color: var(--text-color);
+  }
+}
+.dark-tab {
+  div.tab-item {
+    color: var(--text-color);
+  }
+  div.tab-item.active, div.tab-item:hover {
+    color: var(--brand-color);
+  }
+  .tab-item.active .active-bar {
+    background: var(--brand-color);;
+  }
+}
+.success-btn {
+  --el-button-bg-color: var(--success-bg-color);
+}
+// dialog
+.gw-dialaog {
+  background: var(--nav-bg-color);
+  .el-dialog__title {
+    color: var(--title-color);
+  }
+  .el-dialog__body {
+    color: var(--text-color);
+  }
+}
+// 确认按钮
+div .confirm-btn {
+  --el-button-text-color: var(--title-color);
+  --el-button-bg-color: var(--brand-color);
+  --el-button-border-color: var(--brand-color);
+}
+div .cancel-btn {
+  --el-button-text-color: var(--title-color);
+  --el-button-bg-color: #2A2D34;
+  --el-button-border-color: #2A2D34;
+}
+
+// .news-card {
+//   aspect-ratio: 50/27;
+//   border-radius: 4px;
+//   box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.5);
+// }
