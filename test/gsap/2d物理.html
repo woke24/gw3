@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP 物理动画效果</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 20px;
+        overflow-x: hidden;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        padding: 40px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 1200px;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+      }
+
+      .playground {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 20px;
+      }
+
+      .ball {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: grab;
+        user-select: none;
+        transition: transform 0.2s ease;
+      }
+
+      .ball:active {
+        cursor: grabbing;
+      }
+
+      .ball1 {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        left: 100px;
+        top: 50px;
+      }
+
+      .ball2 {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        left: 200px;
+        top: 50px;
+      }
+
+      .ball3 {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        left: 300px;
+        top: 50px;
+      }
+
+      .ground {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 20px;
+        background: #333;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .controls {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .info-panel {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        color: #666;
+        text-align: center;
+      }
+
+      .gravity-control {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 20px;
+      }
+
+      .gravity-control label {
+        color: #555;
+        font-weight: 500;
+      }
+
+      input[type="range"] {
+        width: 200px;
+      }
+
+      #gravityValue {
+        color: #667eea;
+        font-weight: 500;
+        min-width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>GSAP 物理动画效果演示</h1>
+
+      <div class="playground" id="playground">
+        <div class="ball ball1"></div>
+        <div class="ball ball2"></div>
+        <div class="ball ball3"></div>
+        <div class="ground"></div>
+      </div>
+
+      <div class="controls">
+        <button onclick="dropBalls()">下落</button>
+        <button onclick="bounceBalls()">弹跳</button>
+        <button onclick="throwBalls()">投掷</button>
+        <button onclick="resetBalls()">重置</button>
+      </div>
+
+      <div class="gravity-control">
+        <label for="gravitySlider">重力强度：</label>
+        <input
+          type="range"
+          id="gravitySlider"
+          min="100"
+          max="1000"
+          value="300"
+        />
+        <span id="gravityValue">300</span>
+      </div>
+
+      <div class="info-panel">
+        点击按钮查看不同的物理动画效果，或直接拖动小球进行交互
+      </div>
+    </div>
+
+    <script>
+      let gravity = 300;
+      const playground = document.getElementById("playground");
+      const groundHeight = 20;
+
+      // 重力滑块事件监听
+      document
+        .getElementById("gravitySlider")
+        .addEventListener("input", function (e) {
+          gravity = parseFloat(e.target.value);
+          document.getElementById("gravityValue").textContent = gravity;
+        });
+
+      function dropBalls() {
+        gsap.utils.toArray(".ball").forEach((ball, index) => {
+          gsap.to(ball, {
+            duration: 2,
+            y: playground.offsetHeight - groundHeight - 50,
+            ease: "power2.in",
+            onComplete: () => bounce(ball),
+          });
+        });
+      }
+
+      function bounce(ball) {
+        const currentY = parseFloat(ball.style.top) || 0;
+        const maxBounce = playground.offsetHeight - groundHeight - 50;
+
+        gsap.to(ball, {
+          duration: 0.5,
+          y: maxBounce - 100,
+          ease: "power2.out",
+          onComplete: () => {
+            gsap.to(ball, {
+              duration: 0.5,
+              y: maxBounce,
+              ease: "power2.in",
+              onComplete: () => {
+                if (Math.random() > 0.5) {
+                  bounce(ball);
+                }
+              },
+            });
+          },
+        });
+      }
+
+      function bounceBalls() {
+        gsap.utils.toArray(".ball").forEach((ball, index) => {
+          gsap.to(ball, {
+            duration: 0.5,
+            y: -200,
+            ease: "power2.out",
+            onComplete: () => {
+              gsap.to(ball, {
+                duration: 1,
+                y: playground.offsetHeight - groundHeight - 50,
+                ease: "bounce.out",
+              });
+            },
+          });
+        });
+      }
+
+      function throwBalls() {
+        gsap.utils.toArray(".ball").forEach((ball, index) => {
+          const angle = 45 + index * 15;
+          const distance = 300 + index * 50;
+
+          gsap.to(ball, {
+            duration: 1,
+            x: distance,
+            y: -200,
+            ease: "power2.out",
+            onComplete: () => {
+              gsap.to(ball, {
+                duration: 1,
+                y: playground.offsetHeight - groundHeight - 50,
+                ease: "bounce.out",
+              });
+            },
+          });
+        });
+      }
+
+      function resetBalls() {
+        gsap.killTweensOf(".ball");
+
+        gsap.set(".ball1", {
+          x: 0,
+          y: 0,
+          left: "100px",
+          top: "50px",
+        });
+
+        gsap.set(".ball2", {
+          x: 0,
+          y: 0,
+          left: "200px",
+          top: "50px",
+        });
+
+        gsap.set(".ball3", {
+          x: 0,
+          y: 0,
+          left: "300px",
+          top: "50px",
+        });
+      }
+
+      // 添加拖拽功能
+      gsap.utils.toArray(".ball").forEach((ball) => {
+        let dragging = false;
+        let startX = 0;
+        let startY = 0;
+        let currentX = 0;
+        let currentY = 0;
+
+        ball.addEventListener("mousedown", startDrag);
+        ball.addEventListener("touchstart", startDrag);
+
+        function startDrag(e) {
+          e.preventDefault();
+          dragging = true;
+          startX = e.clientX || e.touches[0].clientX;
+          startY = e.clientY || e.touches[0].clientY;
+
+          const rect = ball.getBoundingClientRect();
+          currentX = rect.left;
+          currentY = rect.top;
+
+          ball.style.cursor = "grabbing";
+          gsap.to(ball, { scale: 1.2, duration: 0.2 });
+
+          document.addEventListener("mousemove", drag);
+          document.addEventListener("touchmove", drag);
+          document.addEventListener("mouseup", endDrag);
+          document.addEventListener("touchend", endDrag);
+        }
+
+        function drag(e) {
+          if (!dragging) return;
+
+          const x = e.clientX || e.touches[0].clientX;
+          const y = e.clientY || e.touches[0].clientY;
+
+          const deltaX = x - startX;
+          const deltaY = y - startY;
+
+          gsap.set(ball, {
+            left: currentX + deltaX,
+            top: currentY + deltaY,
+          });
+        }
+
+        function endDrag() {
+          if (!dragging) return;
+          dragging = false;
+
+          ball.style.cursor = "grab";
+          gsap.to(ball, { scale: 1, duration: 0.2 });
+
+          const rect = ball.getBoundingClientRect();
+          const playgroundRect = playground.getBoundingClientRect();
+          const relativeY = rect.top - playgroundRect.top;
+
+          if (relativeY < playground.offsetHeight - groundHeight - 50) {
+            gsap.to(ball, {
+              duration: 1,
+              top: playground.offsetHeight - groundHeight - 50,
+              ease: "bounce.out",
+            });
+          }
+
+          document.removeEventListener("mousemove", drag);
+          document.removeEventListener("touchmove", drag);
+          document.removeEventListener("mouseup", endDrag);
+          document.removeEventListener("touchend", endDrag);
+        }
+      });
+
+      // 初始化时自动执行下落动画
+      window.addEventListener("load", () => {
+        setTimeout(dropBalls, 500);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <style>
+      .box {
+        width: 100px;
+        height: 100px;
+        background-color: red;
+      }
+      .box2 {
+        width: 100px;
+        height: 100px;
+        background-color: black;
+      }
+      #id {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+      }
+      .timeline {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box"></div>
+    <div class="box2"></div>
+    <div id="id"></div>
+
+    <div class="timeline1 timeline"></div>
+    <div class="timeline2 timeline"></div>
+    <div class="timeline3 timeline"></div>
+  </body>
+</html>
+<script>
+  // 创建动画
+  // to: 当前到结束, from: 结束到当前, fromTo: 开始到结束(不care当前位置), set: 直接到结束（无动画）
+  //   gsap.to(".box", { x: 200 });
+  //   gsap.from(".box", { x: 200 });
+  //   gsap.fromTo(
+  //     ".box",
+  //     { x: 100, backgroundColor: "blue" },
+  //     { x: 500, backgroundColor: "green" }
+  //   );
+  //   gsap.set(".box", { x: 200 });
+
+  //   变量参数
+  let box1 = document.querySelector(".box");
+  let box2 = document.querySelector(".box2");
+  gsap.to([box1, box2], { x: 200, yoyo: true, repeat: -1 });
+  //   x: 100,y: 100; xPercent: 100,yPercent: 100; scale,scaleX,scaleY; skew,skewX,skewY;
+  //  opacity; duration; repeat; delay; yoyo(往复动画); transformOrigin;
+  //   stagger:动画间隔; ease：缓动函数(); onComplete:动画完成回调,onStart,onUpdate,onRepeat,onReverseComplete
+
+  //   timeline(排序工具)
+  var tl = gsap.timeline({ repeat: 2, repeatDelay: 1 }); //重复两次（共3次），每次间隔1秒
+  tl.to("#id", { x: 100, duration: 1 });
+  tl.to("#id", { y: 50, duration: 1 });
+  tl.to("#id", { opacity: 0, duration: 1 });
+
+  // tl.to(element, {
+  //     // 动画属性
+  // }, index * 0.3 延迟,这里的index是用于循环中的)
+
+  //   动画执行时机
+  //   < 和上一个动画一起执行； <3 上一个动画执行3秒后执行； <25%
+  //   > 上一个执行完再执行；>-0.5 上一个动画结束前0.5s,开始执行； >-25%
+
+  var t2 = gsap.timeline({ defaults: { ease: "power1.out" } }); // 默认值可继承
+  t2.to(".timeline1", { xPercent: 50, duration: 2 })
+    .to(".timeline2", { x: 500, duration: 1.5 }, "<0.5")
+    .to(".timeline3", { x: 500, duration: 1, ease: "power1.in" }, ">");
+
+  // 特殊属性和回调
+  //   tl.pause(); //暂停
+  //   tl.resume(); //重新启动
+  //   tl.seek(2); //跳转至1.5s位置
+  //   tl.reverse(); //反转
+  // .timeScale(2);二倍速
+  // .kill();杀死动画，回收内存
+  // .restart();重新播放
+</script>

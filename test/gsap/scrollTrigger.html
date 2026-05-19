@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <style>
+      .animate-on-scroll {
+        width: 100px;
+        height: 500px;
+        background-color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="height: 1000px"></div>
+    <div class="animate-on-scroll" id="animate-on-scroll">555</div>
+    <div style="height: 1000px"></div>
+  </body>
+</html>
+<script>
+  gsap.registerPlugin(ScrollTrigger); // 注册插件（必须）
+
+  // 元素滚动到视口80%时渐入
+  gsap.from(".animate-on-scroll", {
+    opacity: 0,
+    x: -500,
+    duration: 1,
+    ease: "power2.out",
+    scrollTrigger: {
+      trigger: ".animate-on-scroll", // 触发元素
+      //   start: "bottom bottom-=33%",
+      //   end: "top top+=33%", // "play reverse none none"
+      //   start: "center center", // 元素中心在视图中心位置时触发，top/bottom center+=100(上、底在中+100px)
+      //   start: "top 90%", // 触发元素顶部在视口顶部90%时触发（+=100）
+      //   toggleActions: "play none none reset", // 滚动方向对应的动作（进入播放，reverse离开倒放）
+      toggleActions: "play none none reverse",
+      markers: true, // 开发时可设为true，显示触发范围标记
+    },
+  });
+</script>

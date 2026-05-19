@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style></style>
+  </head>
+  <body>
+    <div style="height: 1000px"></div>
+    <p class="basic-banner-title" style="font-size: 32px">
+      55555555555555555555555
+    </p>
+  </body>
+</html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(".basic-banner-title", {
+      scrollTrigger: {
+        trigger: ".basic-banner-title",
+        start: "top 80%",
+        toggleActions: "play none none reset",
+      },
+      opacity: 0,
+      y: -100,
+      ease: "bounce.out",
+      duration: 1,
+    });
+  });
+</script>

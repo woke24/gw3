@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body{
+            padding: 2rem;
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+<form class="row g-3">
+  <div class="col-md-4">
+    <label for="validationServer01" class="form-label">First name</label>
+    <input type="text" class="form-control is-valid" id="validationServer01" value="Mark" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServer02" class="form-label">Last name</label>
+    <input type="text" class="form-control is-valid" id="validationServer02" value="Otto" required>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServerUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend3">@</span>
+      <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" required>
+      <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        Please choose a username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationServer03" class="form-label">City</label>
+    <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required>
+    <div id="validationServer03Feedback" class="invalid-feedback">
+      Please provide a valid city.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationServer04" class="form-label">State</label>
+    <select class="form-select is-invalid" id="validationServer04" aria-describedby="validationServer04Feedback" required>
+      <option selected disabled value="">Choose...</option>
+      <option>...</option>
+    </select>
+    <div id="validationServer04Feedback" class="invalid-feedback">
+      Please select a valid state.
+    </div>
+  </div>
+  <div class="col-md-3">
+    <label for="validationServer05" class="form-label">Zip</label>
+    <input type="text" class="form-control is-invalid" id="validationServer05" aria-describedby="validationServer05Feedback" required>
+    <div id="validationServer05Feedback" class="invalid-feedback">
+      Please provide a valid zip.
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="form-check">
+      <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+      <label class="form-check-label" for="invalidCheck3">
+        Agree to terms and conditions
+      </label>
+      <div id="invalidCheck3Feedback" class="invalid-feedback">
+        You must agree before submitting.
+      </div>
+    </div>
+  </div>
+  <div class="col-12">
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </div>
+</form>
+
+<!-- 成功提交弹窗 -->
+<div id="successModal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content rounded-3 shadow-lg">
+            <div class="modal-body p-8 text-center">
+                <div class="bg-success/10 w-20 h-20 rounded-circle d-flex align-items-center justify-content-center mx-auto mb-6">
+                    <i class="fa fa-check text-success fs-3"></i>
+                </div>
+                <h2 class="h4 fw-bold mb-3">Message Sent!</h2>
+                <p class="text-muted mb-6">Thank you for contacting us. We'll get back to you soon.</p>
+                <button id="closeModal" class="btn btn-primary">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="bootstrap.min.js"></script>
+<script>
+// 表单验证脚本
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('contactForm');
+    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+    const closeModal = document.getElementById('closeModal');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // 验证规则
+    const validationRules = {
+        username: {
+            required: true,
+            minLength: 2,
+            message: 'Please enter your full name (at least 2 characters)'
+        },
+        email: {
+            required: true,
+            pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            message: 'Please enter a valid email address'
+        },
+        phone: {
+            required: false,
+            pattern: /^\+?[0-9\s\-\(\)]{8,20}$/,
+            message: 'Please enter a valid phone number (8-20 characters)'
+        },
+        message: {
+            required: true,
+            minLength: 10,
+            message: 'Please enter your message (at least 10 characters)'
+        }
+    };
+    
+    // 显示错误信息
+    function showError(field, message) {
+        const errorElement = field.parentElement.querySelector('.error-message');
+        field.classList.add('is-invalid');
+        field.classList.remove('is-valid');
+        
+        if (errorElement) {
+            errorElement.querySelector('span').textContent = message;
+        }
+    }
+    
+    // 隐藏错误信息
+    function hideError(field) {
+        field.classList.remove('is-invalid');
+        field.classList.add('is-valid');
+    }
+    
+    // 验证单个字段
+    function validateField(field) {
+        const fieldName = field.name;
+        const rules = validationRules[fieldName];
+        const value = field.value.trim();
+        
+        if (!rules.required && value === '') {
+            field.classList.remove('is-invalid', 'is-valid');
+            return true;
+        }
+        
+        if (rules.required && value === '') {
+            showError(field, rules.message);
+            return false;
+        }
+        
+        if (rules.minLength && value.length < rules.minLength) {
+            showError(field, rules.message);
+            return false;
+        }
+        
+        if (rules.pattern && !rules.pattern.test(value)) {
+            showError(field, rules.message);
+            return false;
+        }
+        
+        hideError(field);
+        return true;
+    }
+    
+    // 实时验证
+    const inputFields = form.querySelectorAll('input, textarea');
+    inputFields.forEach(field => {
+        field.addEventListener('blur', () => validateField(field));
+        field.addEventListener('input', () => {
+            if (field.classList.contains('is-invalid')) {
+                validateField(field);
+            }
+        });
+    });
+    
+    // 表单提交处理
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        let isValid = true;
+        inputFields.forEach(field => {
+            if (!validateField(field)) {
+                isValid = false;
+            }
+        });
+        
+        if (isValid) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span><i class="fa fa-spinner fa-spin me-2"></i> Sending...</span>';
+            
+            // 替换为实际提交逻辑
+            setTimeout(() => {
+                form.reset();
+                inputFields.forEach(field => {
+                    field.classList.remove('is-invalid', 'is-valid');
+                });
+                successModal.show();
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span>Send Message</span><i class="fa fa-paper-plane ms-2"></i>';
+            }, 1500);
+        } else {
+            const firstError = form.querySelector('.is-invalid');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstError.focus();
+            }
+        }
+    });
+    
+    closeModal.addEventListener('click', function() {
+        successModal.hide();
+    });
+});
+</script>

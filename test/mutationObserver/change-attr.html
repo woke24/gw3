@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="theme-btn" onclick="hh()">555</button>
+</body>
+</html>
+<script>
+// 目标元素（假设页面中有 <button id="theme-btn">切换主题</button>）
+const themeButton = document.getElementById('theme-btn');
+
+// 1. 创建观察者实例
+const attributeObserver = new MutationObserver((mutations) => {
+  mutations.forEach(mutation => {
+    const { attributeName, oldValue, target } = mutation;
+    const newValue = target.getAttribute(attributeName);
+    console.log(`属性 ${attributeName} 变化: 旧值=${oldValue}，新值=${newValue}`);
+
+    // 示例：监听 class 变化，执行主题切换逻辑
+    if (attributeName === 'class') {
+      if (newValue.includes('dark-mode')) {
+        document.body.style.backgroundColor = '#333';
+      } else {
+        document.body.style.backgroundColor = '#fff';
+      }
+    }
+  });
+});
+
+// 2. 配置监听选项（指定监听的属性）
+const config = {
+  attributes: true,                // 监听属性变化
+  attributeFilter: ['class', 'disabled'], // 仅监听 class 和 disabled 属性
+  attributeOldValue: true          // 记录属性变化前的值
+};
+
+// 3. 启动监听
+attributeObserver.observe(themeButton, config);
+
+// 模拟属性变化（测试用）
+function hh() {
+  setTimeout(() => {
+    themeButton.classList.add('dark-mode'); // 修改 class
+    }, 1000);
+
+    setTimeout(() => {
+    themeButton.disabled = true; // 修改 disabled 状态
+    }, 2000);
+
+    setTimeout(() => {
+    themeButton.classList.remove('dark-mode'); // 移除 class
+}, 3000);  
+}
+ 
+</script>

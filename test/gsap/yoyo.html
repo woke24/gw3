@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSAP Yoyo Animation Demo</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.13.0/gsap.min.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 20px;
+        min-height: 100vh;
+        background: #1a1a1a;
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .demo-container {
+        width: 100%;
+        max-width: 800px;
+        margin: 20px 0;
+      }
+
+      .box {
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(45deg, #667eea, #764ba2);
+        border-radius: 10px;
+        margin: 20px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .controls {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        margin: 20px 0;
+        flex-wrap: wrap;
+      }
+
+      button {
+        padding: 10px 20px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      button:hover {
+        background: #5a67d8;
+        transform: translateY(-2px);
+      }
+
+      .demo-section {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+      }
+
+      h3 {
+        color: white;
+        margin-bottom: 15px;
+      }
+
+      .description {
+        color: #ccc;
+        margin-bottom: 15px;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .slider-container {
+        margin: 20px 0;
+        color: white;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      input[type="range"] {
+        width: 200px;
+      }
+
+      .value-display {
+        min-width: 50px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="color: white; text-align: center">GSAP Yoyo Animation Demo</h1>
+
+    <!-- 基础 Yoyo 示例 -->
+    <div class="demo-container">
+      <div class="demo-section">
+        <h3>基础 Yoyo 效果</h3>
+        <div class="description">yoyo: true - 动画会往返播放</div>
+        <div class="box" id="box1">Box 1</div>
+        <div class="controls">
+          <button onclick="playBasicYoyo()">播放</button>
+          <button onclick="pauseBasicYoyo()">暂停</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 带 Repeat 的 Yoyo -->
+    <div class="demo-container">
+      <div class="demo-section">
+        <h3>带 Repeat 的 Yoyo</h3>
+        <div class="description">repeat: 3, yoyo: true - 动画往返3次</div>
+        <div class="box" id="box2">Box 2</div>
+        <div class="controls">
+          <button onclick="playRepeatYoyo()">播放</button>
+          <button onclick="pauseRepeatYoyo()">暂停</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 带 YoyoEase 的 Yoyo -->
+    <div class="demo-container">
+      <div class="demo-section">
+        <h3>带 YoyoEase 的 Yoyo</h3>
+        <div class="description">yoyoEase: true - 返回动画使用反向缓动</div>
+        <div class="box" id="box3">Box 3</div>
+        <div class="controls">
+          <button onclick="playYoyoEase()">播放</button>
+          <button onclick="pauseYoyoEase()">暂停</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 自定义 Yoyo 控制 -->
+    <div class="demo-container">
+      <div class="demo-section">
+        <h3>自定义 Yoyo 控制</h3>
+        <div class="slider-container">
+          <label>Repeat 次数：</label>
+          <input type="range" id="repeatSlider" min="1" max="10" value="3" />
+          <span class="value-display" id="repeatValue">3</span>
+        </div>
+        <div class="slider-container">
+          <label>Duration (秒)：</label>
+          <input
+            type="range"
+            id="durationSlider"
+            min="0.5"
+            max="3"
+            step="0.1"
+            value="1"
+          />
+          <span class="value-display" id="durationValue">1</span>
+        </div>
+        <div class="box" id="box4">Box 4</div>
+        <div class="controls">
+          <button onclick="playCustomYoyo()">播放</button>
+          <button onclick="pauseCustomYoyo()">暂停</button>
+          <button onclick="resetCustomYoyo()">重置</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 基础 Yoyo
+      function playBasicYoyo() {
+        gsap.to("#box1", {
+          x: 200,
+          duration: 1,
+          ease: "power2.inOut",
+          yoyo: true,
+          repeat: -1,
+        });
+      }
+
+      function pauseBasicYoyo() {
+        gsap.to("#box1", {
+          x: 0,
+          duration: 0.3,
+        });
+      }
+
+      // 带 Repeat 的 Yoyo
+      function playRepeatYoyo() {
+        gsap.to("#box2", {
+          x: 200,
+          rotation: 360,
+          duration: 1,
+          ease: "power2.inOut",
+          yoyo: true,
+          repeat: 3,
+        });
+      }
+
+      function pauseRepeatYoyo() {
+        gsap.to("#box2", {
+          x: 0,
+          rotation: 0,
+          duration: 0.3,
+        });
+      }
+
+      // 带 YoyoEase 的 Yoyo
+      function playYoyoEase() {
+        gsap.to("#box3", {
+          x: 200,
+          scale: 1.5,
+          duration: 1,
+          ease: "power2.in",
+          yoyo: true,
+          repeat: -1,
+          yoyoEase: true,
+        });
+      }
+
+      function pauseYoyoEase() {
+        gsap.to("#box3", {
+          x: 0,
+          scale: 1,
+          duration: 0.3,
+        });
+      }
+
+      // 自定义 Yoyo 控制
+      function playCustomYoyo() {
+        const repeat = parseInt(document.getElementById("repeatSlider").value);
+        const duration = parseFloat(
+          document.getElementById("durationSlider").value
+        );
+
+        gsap.to("#box4", {
+          x: 200,
+          y: 100,
+          rotation: 360,
+          scale: 1.5,
+          duration: duration,
+          ease: "power2.inOut",
+          yoyo: true,
+          repeat: repeat,
+          yoyoEase: true,
+        });
+      }
+
+      function pauseCustomYoyo() {
+        gsap.to("#box4", {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 1,
+          duration: 0.3,
+        });
+      }
+
+      function resetCustomYoyo() {
+        gsap.killTweensOf("#box4");
+        gsap.set("#box4", {
+          x: 0,
+          y: 0,
+          rotation: 0,
+          scale: 1,
+        });
+      }
+
+      // 滑块事件监听
+      document
+        .getElementById("repeatSlider")
+        .addEventListener("input", function (e) {
+          document.getElementById("repeatValue").textContent = e.target.value;
+        });
+
+      document
+        .getElementById("durationSlider")
+        .addEventListener("input", function (e) {
+          document.getElementById("durationValue").textContent = e.target.value;
+        });
+
+      // 页面加载时自动播放第一个动画
+      window.addEventListener("load", () => {
+        playBasicYoyo();
+      });
+    </script>
+  </body>
+</html>

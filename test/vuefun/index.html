@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>原生 JS 响应式（Object.defineProperty 实现）</title>
+  <style>
+    .container { margin: 20px; }
+    button { margin: 0 5px; padding: 4px 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>消息：<span id="msg"></span></h1>
+    <p>数量：<span id="num"></span></p>
+    <button onclick="changeMsg()">修改消息</button>
+    <button onclick="addNum()">数量+1</button>
+  </div>
+
+  <script>
+    // 1. 响应式函数：为对象的每个属性添加监听
+    function defineReactive(obj, key, value) {
+      // 递归处理嵌套对象（如果属性值是对象，也需要响应式）
+      if (typeof value === "object" && value !== null) {
+        reactive(value);
+      }
+
+      // 2. 监听属性的读写
+      Object.defineProperty(obj, key, {
+        get() {
+          return value; // 读取时返回当前值
+        },
+        set(newValue) {
+          if (newValue === value) return; // 新值和旧值一致，不处理
+          value = newValue; // 更新值
+          // 递归处理新值（如果新值是对象，也需要响应式）
+          if (typeof newValue === "object" && newValue !== null) {
+            reactive(newValue);
+          }
+          updateView(); // 触发视图更新
+        }
+      });
+    }
+
+    // 3. 批量处理对象的所有属性，使其响应式
+    function reactive(obj) {
+      // 遍历对象的所有自有属性
+      Object.keys(obj).forEach(key => {
+        defineReactive(obj, key, obj[key]);
+      });
+      return obj;
+    }
+
+    // 4. 初始化响应式数据
+    const data = reactive({
+      msg: "Hello 旧浏览器兼容版！",
+      num: 0
+    });
+
+    // 5. 视图更新函数
+    function updateView() {
+      document.getElementById("msg").textContent = data.msg;
+      document.getElementById("num").textContent = data.num;
+    }
+
+    // 6. 操作函数
+    function changeMsg() {
+      data.msg = "兼容版数据更新！" + new Date().getMinutes();
+    }
+    function addNum() {
+      data.num++; // 修改属性，触发 set 函数和视图更新
+    }
+
+    // 初始渲染
+    updateView();
+
+  </script>
+</body>
+</html>

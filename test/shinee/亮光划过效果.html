@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        span{
+            color: #fff;
+            display: inline-block;
+            -webkit-text-fill-color: transparent;
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+            background-image: linear-gradient(90deg,
+            #FFCC64 0%,
+            #F7B160 40%,
+            #fff 50%,  
+            #FFCC64 60%,
+            #F7B160 100%
+            );
+            animation-timing-function: linear;
+            background-size: 300%, 300%;
+            background-clip: text;
+            animation-name: stcaGlitter;
+            animation-duration: 6s;
+            animation-iteration-count: infinite;
+        }
+        @keyframes stcaGlitter {
+            0% {
+                background-position: 100%;
+            }
+            75%, 100% {
+                background-position: 0%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <span>aaaaabbbbbbcccc</span>
+</body>
+</html>

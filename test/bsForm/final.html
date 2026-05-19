@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Application Form</title>
+		<style>
+			/* 基础样式重置 */
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: "Inter", system-ui, -apple-system, sans-serif;
+				line-height: 1.6;
+				color: #1f2937;
+				background-color: #f9fafb;
+				min-height: 100vh;
+				display: flex;
+				flex-direction: column;
+			}
+
+			/* 容器样式 */
+			.container {
+				width: 100%;
+				padding-right: 1rem;
+				padding-left: 1rem;
+				margin-right: auto;
+				margin-left: auto;
+			}
+
+			@media (min-width: 640px) {
+				.container {
+					max-width: 640px;
+				}
+			}
+
+			@media (min-width: 768px) {
+				.container {
+					max-width: 768px;
+				}
+			}
+
+			@media (min-width: 1024px) {
+				.container {
+					max-width: 1024px;
+				}
+			}
+
+			/* 头部样式 */
+			header {
+				background-color: white;
+				box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+				padding: 1rem 0;
+			}
+
+			header h1 {
+				font-size: clamp(1.5rem, 3vw, 2rem);
+				font-weight: 700;
+				text-align: center;
+				color: #1f2937;
+			}
+
+			/* 主内容区样式 */
+			main {
+				flex-grow: 1;
+				padding: 2rem 0;
+			}
+
+			.form-card {
+				max-width: 640px;
+				margin: 0 auto;
+				background-color: white;
+				border-radius: 0.75rem;
+				box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+				padding: 1.5rem;
+				transition: all 0.2s ease-in-out;
+			}
+
+			.form-card:hover {
+				box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+			}
+
+			@media (min-width: 640px) {
+				.form-card {
+					padding: 2rem;
+				}
+			}
+
+			/* 表单样式 */
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 2rem;
+			}
+
+			.form-section {
+				margin-bottom: 1.5rem;
+			}
+
+			.form-section h2 {
+				font-size: 1.125rem;
+				font-weight: 600;
+				margin-bottom: 1rem;
+				color: #1f2937;
+			}
+
+			/* 单选框样式 */
+			.radio-group {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 1.5rem;
+			}
+
+			.radio-label {
+				display: inline-flex;
+				align-items: center;
+				cursor: pointer;
+			}
+
+			.radio-input {
+				width: 1.25rem;
+				height: 1.25rem;
+				color: #165dff;
+				border: 1px solid #d1d5db;
+				border-radius: 50%;
+				margin-right: 0.5rem;
+			}
+
+			.radio-input:focus {
+				outline: none;
+				box-shadow: 0 0 0 2px rgba(22, 93, 255, 0.5);
+			}
+
+			/* 输入框网格布局 */
+			.input-grid {
+				display: grid;
+				grid-template-columns: 1fr;
+				gap: 1.5rem;
+			}
+
+			@media (min-width: 768px) {
+				.input-grid {
+					grid-template-columns: 1fr 1fr;
+				}
+			}
+
+			/* 输入框样式 */
+			.input-group {
+				transition: transform 0.2s ease-in-out;
+			}
+
+			.input-group:focus-within {
+				transform: scale(1.01);
+			}
+
+			.input-label {
+				display: block;
+				font-size: 0.875rem;
+				font-weight: 500;
+				color: #4b5563;
+				margin-bottom: 0.25rem;
+			}
+
+			.form-input {
+				width: 100%;
+				padding: 0.5rem 1rem;
+				border: 1px solid #d1d5db;
+				border-radius: 0.5rem;
+				font-size: 1rem;
+			}
+
+			.form-input:focus {
+				border-color: #165dff;
+				box-shadow: 0 0 0 1px #165dff;
+				outline: none;
+			}
+
+			/* 文本区域样式 */
+			.textarea-group {
+				margin-bottom: 0.25rem;
+			}
+
+			.form-textarea {
+				width: 100%;
+				padding: 0.5rem 1rem;
+				border: 1px solid #d1d5db;
+				border-radius: 0.5rem;
+				font-size: 1rem;
+				min-height: 100px;
+				resize: none;
+				font-family: inherit;
+			}
+
+			.form-textarea:focus {
+				border-color: #165dff;
+				box-shadow: 0 0 0 1px #165dff;
+				outline: none;
+			}
+
+			.char-count {
+				display: block;
+				text-align: right;
+				font-size: 0.75rem;
+				color: #6b7280;
+				margin-top: 0.25rem;
+			}
+
+			.char-count.exceeded {
+				color: #ef4444;
+			}
+
+			/* 按钮样式 */
+			.submit-btn {
+				width: 100%;
+				background-color: #165dff;
+				color: white;
+				font-weight: 500;
+				padding: 0.75rem 1rem;
+				border: none;
+				border-radius: 0.5rem;
+				font-size: 1rem;
+				cursor: pointer;
+				transition: all 0.2s ease-in-out;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 0.5rem;
+			}
+
+			.submit-btn:hover {
+				background-color: rgba(22, 93, 255, 0.9);
+			}
+
+			.submit-btn:focus {
+				outline: none;
+				box-shadow: 0 0 0 2px rgba(22, 93, 255, 0.5);
+			}
+
+			/* 页脚样式 */
+			footer {
+				background-color: white;
+				border-top: 1px solid #e5e7eb;
+				padding: 1.5rem 0;
+			}
+
+			footer p {
+				text-align: center;
+				font-size: 0.875rem;
+				color: #6b7280;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="min-h-screen flex flex-col">
+			<!-- 页面头部 -->
+			<header>
+				<div class="container">
+					<h1>Application Form</h1>
+				</div>
+			</header>
+
+			<!-- 主要内容区 -->
+			<main>
+				<div class="container">
+					<div class="form-card">
+						<!-- 表单 -->
+						<form id="applicationForm">
+							<!-- 组织类型选择 -->
+							<div class="form-section">
+								<h2>Organization Type</h2>
+								<div class="radio-group">
+									<label class="radio-label">
+										<input
+											type="radio"
+											name="organization"
+											value="distributor"
+											class="radio-input"
+											checked
+										/>
+										<span>Distributor</span>
+									</label>
+									<label class="radio-label">
+										<input
+											type="radio"
+											name="organization"
+											value="business"
+											class="radio-input"
+										/>
+										<span>Business Purchaser</span>
+									</label>
+								</div>
+							</div>
+
+							<!-- 个人信息输入区 -->
+							<div class="form-section">
+								<h2>Contact Information</h2>
+
+								<div class="input-grid">
+									<!-- 姓名 -->
+									<div class="input-group">
+										<label for="name" class="input-label"> Name* </label>
+										<input
+											type="text"
+											id="name"
+											name="name"
+											required
+											class="form-input"
+											placeholder="Enter your full name"
+										/>
+									</div>
+
+									<!-- 国家 -->
+									<div class="input-group">
+										<label for="country" class="input-label"> Country* </label>
+										<input
+											type="text"
+											id="country"
+											name="country"
+											required
+											class="form-input"
+											placeholder="Enter your country"
+										/>
+									</div>
+
+									<!-- 电话号码 -->
+									<div class="input-group">
+										<label for="phone" class="input-label">
+											Phone Number*
+										</label>
+										<input
+											type="tel"
+											id="phone"
+											name="phone"
+											required
+											class="form-input"
+											placeholder="Enter your phone number"
+										/>
+									</div>
+
+									<!-- 邮箱 -->
+									<div class="input-group">
+										<label for="email" class="input-label"> Email* </label>
+										<input
+											type="email"
+											id="email"
+											name="email"
+											required
+											class="form-input"
+											placeholder="Enter your email address"
+										/>
+									</div>
+								</div>
+							</div>
+
+							<!-- 文本区域 -->
+							<div class="form-section">
+								<label for="description" class="input-label">
+									Additional Information
+								</label>
+								<div class="textarea-group">
+									<textarea
+										id="description"
+										name="description"
+										class="form-textarea"
+										maxlength="20"
+										placeholder="Please provide any additional information that might be relevant to your application..."
+									></textarea>
+								</div>
+								<span id="charCount" class="char-count">0/500</span>
+							</div>
+
+							<!-- 提交按钮 -->
+							<div>
+								<button type="submit" class="submit-btn">
+									<span>Apply Now</span>
+									<svg
+										width="16"
+										height="16"
+										viewBox="0 0 24 24"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="2"
+									>
+										<path d="M5 12h14M12 5l7 7-7 7"></path>
+									</svg>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</main>
+
+			<!-- 页脚 -->
+			<footer>
+				<div class="container">
+					<p>&copy; 2023 All Rights Reserved.</p>
+				</div>
+			</footer>
+		</div>
+
+		<script>
+			// 字符计数功能
+			const textarea = document.getElementById("description");
+			const charCount = document.getElementById("charCount");
+
+			textarea.addEventListener("input", () => {
+				const count = textarea.value.length;
+				charCount.textContent = `${count}/500`;
+
+				// 超过限制时添加视觉提示
+				if (count > 500) {
+					charCount.classList.add("exceeded");
+					textarea.style.borderColor = "#EF4444";
+				} else {
+					charCount.classList.remove("exceeded");
+					textarea.style.borderColor = "#D1D5DB";
+				}
+			});
+
+			// 表单提交处理
+			const form = document.getElementById("applicationForm");
+			form.addEventListener("submit", (e) => {
+				e.preventDefault();
+
+				// 简单验证
+				const name = document.getElementById("name").value;
+				const country = document.getElementById("country").value;
+				const phone = document.getElementById("phone").value;
+				const email = document.getElementById("email").value;
+				const description = document.getElementById("description").value;
+
+				if (!name || !country || !phone || !email) {
+					alert("Please fill in all required fields.");
+					return;
+				}
+
+				if (description.length > 500) {
+					alert("Additional information cannot exceed 500 characters.");
+					return;
+				}
+
+				// 模拟表单提交
+				const formData = new FormData(form);
+				const data = Object.fromEntries(formData.entries());
+
+				console.log("Form submitted:", data);
+
+				// 显示成功消息
+				alert("Your application has been submitted successfully!");
+				form.reset();
+				charCount.textContent = "0/500";
+				charCount.classList.remove("exceeded");
+				textarea.style.borderColor = "#D1D5DB";
+			});
+		</script>
+	</body>
+</html>
