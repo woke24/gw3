@@ -1,0 +1,122 @@
+不显示npm -v
+powershell 运行 Set-ExecutionPolicy Restricted -Scope CurrentUser   Y
+
+拖动deepseek 到右边
+
+https://katvr-test.myshopify.com/admin
+www.kat-vr.com
+katvr.myshopify.com
+
+clash----tun模式（shopify）&系统代理都开（外网）&规则模式
+
+npm install -g @shopify/cli@latest（3.87.0有问题）
+
+npm install -g @shopify/cli@3.86.1
+
+登录
+shopify login
+
+获取所有主题列表
+shopify theme list
+
+选择对应主题拉取代码
+shopify theme pull （--store=katvr.myshopify.com， 首次）
+
+运行
+shopify theme dev
+
+推送对应主题
+shopify theme push
+
+退出
+shopify logout
+
+
+https://www.anker.com/
+https://www.dreametech.com/
+https://us.ecoflow.com/
+https://store.insta360.com/
+
+google曝光下降问题解决方案（性能优化&seo优化）&shopify官网开发&shopify企业公开知识库建设
+
+clash vpn导入链接
+https://sub.grempt.com/link/131325/LJxYd3MLD5JN   120G包月
+
+https://sub.grempt.com/link/142293/xufNxzUPKrjS  200G包月
+
+https://sub.grempt.com/link/160990/EECNqTbFtZyj 380G包月
+
+https://sub.grempt.com/link/176750/7ae1bcd53c9d0ff3043d 380包月
+
+https://sub.grempt.com/link/192220/d769cc052b666f79f4c3
+
+https://gitlab.katvr.com/
+woke, woke@624
+退款售后系统-后台	(服务器对应：back-end-web)
+https://gitlab.katvr.com/miley/katvr-admin.git
+退款售后系统-H5	(服务器对应：back-web)
+https://gitlab.katvr.com/miley/katvr-refund.git
+积分兑换商城	(服务器对应：product-web)
+https://gitlab.katvr.com/miley/points-redeem-center.git
+
+/opt/文件路径下
+
+20.18.0
+pnpm install --registry=https://registry.npmmirror.com
+pnpm dev
+pnpm build
+
+pnpm-lock.yaml(pnpm), opackage-lock.json(npm)
+
+GW3.0 ：
+https://gitlab.katvr.com/woke/Gateway3-web（密码：woke + qwer1234）
+http://apidoc.katvr.com/login（接口文档）
+
+Gateway_Web.exe运行(Gateway_Web.exe.config中appSettings改url本地调试)
+
+window.chrome.webview.postMessage 发送消息
+window.chrome.webview.hostObjects 暴露接口调用
+
+GW2(qq+QWER1234)
+
+gateway后台
+https://gatewaybackground.katvr.com/ 
+admin + Katvr!@#123
+
+# 显式指定--local，更清晰，避免误操作
+git config --local user.name "你的项目专属用户名"
+git config --local user.email "你的项目专属邮箱"
+
+vscode重置视图
+Ctrl+Shift+P  View: Reset View Locations
+
+10点走-10点到，24点后走-上午不来
+小周周六-调休（12.30后用）
+周五周六都6点，其余8点
+
+黑五：
+
+网页速度&评分每日一看（10.29-11.4）
+https://www.waimaoxia.net/login
+
+clash-verge-rev
+
+ejs打印数据
+<pre id="debug-menus" style="display:none"><%- JSON.stringify(banners || [], null, 2) %></pre>
+          <script>
+            try {
+              var menusData = JSON.parse(document.getElementById('debug-menus').textContent || '[]');
+              console.log('menus:', menusData);
+            } catch (e) {
+              console.error('parse menus failed', e);
+            }
+          </script>
+
+共用邮箱
+soft@katvr.com
+Katvr20150401.sw
+
+alt+d
+地址栏输入cmdnpm
+
+

@@ -1,0 +1,485 @@
+1.新建html分区 
+添加分区，向上拖动到需要位置
+
+2.创建section，从别的section复制过来组件，进行自定义
+内容比如btn：
+{%- if section.settings.button_text != blank -%}
+        {% render 'button', content: section.settings.button_text %}
+ {%- endif -%}
+
+setting中加配置：
+{
+        "type": "text",
+        "id": "button_text",
+        "label": "Button text"
+      }
+3.查看对象 | json
+{{ product | json }}
+<script>
+  // 获取 product 的json数据
+  let product = {};
+  product.data = {{ product | json }};
+</script>
+console.log('{{ current_variant | json}}');
+4.
+{%- javascript -%}
+
+{%- endjavascript -%}
+多次渲染只执行一次，每个文件只能有一个，适用于轻量级js，代码会被打包到全局的 theme.js 文件中
+
+自动压缩，适合sections内，支持完Liquid 语法和变量：
+{% style %} 
+{% endstyle %}
+5
+{% comment %} render 标签中添加新参数，并将 sub_items 变量传递给该参数 {% endcomment %}
+{%- render 'mega-menu-horizontal', link: link, mega_menu_block: mega_menu_block, sub_items: sub_items -%}
+
+6.
+function mediaIsMobile() {
+        return window.matchMedia("(max-width: 767px)").matches;
+ }
+7.一个元素要sticky，它的父级高度应该超过屏幕
+
+8. forloop.index0， forloop.index
+
+9. 定义透明背景
+--content-over-media-overlay: {{ section.settings.overlay_color.rgb }} / {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+ddpai,上海
+
+10.跳转页面内section
+targetSection.scrollIntoView({ behavior: 'smooth' });
+
+11. settings_schema.json(全局配置)
+{{ settings. }}
+
+12.
+部分手机使用classList.add添加的class不生效
+
+13. 有上下图时懒加载被去除（优化时必要去掉）
+ _preloadImages() {
+    // requestAnimationFrame(() => {
+    //   [this.previousSlide, this.nextSlide].forEach((item) => {
+    //     if (item) {
+    //       Array.from(item.querySelectorAll('img[loading="lazy"]')).forEach((img) => img.removeAttribute("loading"));
+    //     }
+    //   });
+    // });
+  }
+
+14. 文字渐变
+background: {{ section.settings.text_gradient_color }};
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+
+15. 获取产品所有数据
+{
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    }
+{% assign product_handle = section.settings.product %}
+
+{% assign product = all_products[product_handle] %}
+console.log('Product:', {{ product | json }});
+console.log('Variants:', {{ product.variants | json }});
+
+16. iphone早期机型sass编译失效
+wb二合一动画： video-media .object-fill
+尽量少用sass,多用class嵌套，避免自定义元素选择器
+
+17. color转rgba
+ background: {{ settings.text_color | color_to_rgb | replace: 'rgb(', '' | replace: ')', '' | prepend: 'rgba(' | append: ', 0.1)' }};
+
+18. 组件类型为section
+"class": "shopify-section--ts-multi",
+  "tag": "section",
+
+19. srcset获取不同分辨率的图片，如果图片800宽，加上800选项，是按800的尺寸进行重渲染
+<source
+                        media="(max-width: 768px)"
+                        srcset="{{ block.settings.ts_product_img1_m | image_url: width: 400 }} 400w, {{ block.settings.ts_product_img1_m | image_url: width: 600 }} 600w, {{ block.settings.ts_product_img1_m | image_url: width: 800 }} 800w"
+                        width="{{ block.settings.ts_product_img1_m.width }}"
+                        height="{{ block.settings.ts_product_img1_m.height }}"
+                        class="tabs-slider-media__img"
+                      >
+20. 媒体查询区分双端
+window.matchMedia("(max-width: 767px)").matches
+
+21. 无btn跳转url
+<div class="ts_swiper_product" onclick="sliderGo(this, '{{ block.settings.ts_product3_link }}')">
+
+viofo,70mai, 深圳
+
+22. sku切换
+var variantSelector = document.querySelector('[name="id"]');
+
+23. img
+{% comment %}
+           woke add product img-with-text block
+            image_url：生成图片的 URL。
+            width：设置图片的宽度。
+            image_tag：生成完整的 <img> 标签，并添加 class 属性。
+            loading: 'lazy', 懒加载
+            class: 'product-iwt__image-element'：添加 CSS 类以便于样式控制
+            widths: '30,40,50',srcset属性，包含30、40和50px宽的图片.根据设备的屏幕分辨率和大小选择合适的图片，提高页面加载性能和显示效果
+          {% endcomment %}
+
+24.    
+ resources[limit]=10&resources[limit_scope]=each
+        确保每种资源类型（例如产品、文章、页面等）都返回指定数量的结果，而不是总共返回指定数量的结果
+        
+      resources[options][fields]=author,tag,title,product_type,variants.title,vendor,variants.sku 表示在搜索结果中包含以下字段的数据：
+
+      author：作者
+      tag：标签
+      title：标题
+      product_type：产品类型
+      variants.title：变体标题
+      vendor：供应商
+      variants.sku：变体 SKU
+
+25.
+linklists获取全部菜单
+linklists.main-menu 获取指定菜单
+
+{% assign menu = linklists.main-menu %}
+                  <ul>
+                    {% for link in menu.links %}
+                      <li>
+                        {{ link.title }} ({{ link.url }})
+                        {% if link.links.size > 0 %}
+                          <ul>
+                            {% for child in link.links %}
+                              <li>{{ child.title }} ({{ child.url }})</li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+3w-us： 自定义
+{% assign menu = linklists.main-menu %}
+                  <ul>
+                    {% for link in menu.links %}
+                      <li style="color: blue;">
+                        {{ link.title }} ({{ link.url }}){{ link.active  }}
+                        {% if link.links.size > 0 %}
+                          <ul>
+                            {% for child in link.links %}
+                              <li style="color: red;">
+                                {{ child.title }} ({{ child.url }}){{ child.active  }}
+                              </li>
+                              {% if child.links.size > 0 %}
+                                {% for children in child.links %}
+                                  <li style="color: green;">
+                                    {{ children.title }} ({{ children.url }}){{ children.active  }}
+                                  </li>
+                                {% endfor %}
+                              {% endif %}
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+
+{% assign breadcrumb_links = '' | split: '' %}
+{% assign menu = linklists.main-menu %}
+
+{% for link in menu.links %}
+  {% if link.active or link.child_active %}
+    {% assign breadcrumb_links = breadcrumb_links | push: link %}
+    
+    {% for child in link.links %}
+      {% if child.active %}
+        {% assign breadcrumb_links = breadcrumb_links | push: child %}
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
+
+<nav class="breadcrumb">
+  <a href="/">Home</a>
+  {% for crumb in breadcrumb_links %}
+    &raquo; <a href="{{ crumb.url }}">{{ crumb.title }}</a>
+  {% endfor %}
+</nav>
+
+26. 横竖屏使用不同视频
+<video controls>
+  <!-- 横屏设备（如PC、平板）加载 landscape.mp4 -->
+  <source src="landscape.mp4" type="video/mp4" media="(min-aspect-ratio: 1/1)">
+  
+  <!-- 竖屏设备（如手机）加载 portrait.mp4 -->
+  <source src="portrait.mp4" type="video/mp4" media="(max-aspect-ratio: 1/1)">
+  
+  <!-- 默认回退视频 -->
+  <source src="default.mp4" type="video/mp4">
+  
+  您的浏览器不支持 HTML5 视频。
+</video>
+
+27.
+loading="eager"：表示资源会立即加载
+
+28. 官方推荐写法
+{{ 'common.css' | asset_url | stylesheet_tag: preload: true }} 预加载
+{{ 'theme.css' | asset_url | stylesheet_tag }}
+{{ 'theme.js' | asset_url | script_tag: async }}
+
+28. 
+传统写法，保证所有用户都能正常访问
+<link rel='preload' as='script' href='{{ 'vendor.js' | asset_url }}'>
+ <script src='{{ 'vendor.js' | asset_url }}'></script>
+ES6 模块写法，只服务于现代浏览器
+<script type="module" src="{{ 'vendor.js' | asset_url }}"></script>
+
+29.多次引入同一组件，避免js浪费？
+{% unless component_loaded %}
+<script src="{{ 'my-component.js' | asset_url }}" defer></script>
+{% assign component_loaded = true %}
+{% endunless %}
+
+抽离公共方法
+// assets/theme.js
+window.MyComponents = window.MyComponents || {};
+
+if (!window.MyComponents.myComponent) {
+  window.MyComponents.myComponent = {
+    init: function() {
+      // 初始化代码...
+    }
+  };
+}
+
+// sections/my-component.liquid中调用
+{% if template.name == 'product' %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.MyComponents && window.MyComponents.myComponent) {
+    window.MyComponents.myComponent.init();
+  }
+});
+</script>
+{% endif %}
+
+30.
+{{canonical_url}}liquid获取当前页url
+
+32. 分组sections: https://shopify.dev/docs/storefronts/themes/architecture/section-groups#usage
+render 添加分组或block
+section 添加section
+include 废弃
+
+33. 只要后台图有alt，img就会有alt
+34. 移动端不加载：
+display: none;
+height: 0;
+width: 0;
+overflow: hidden;
+
+34：
+当父元素存在 transform: none 以外的属性（如 transform: translate(), scale(), rotate()）、perspective 或 filter 时，会创建一个新的「层叠上下文」，导致 fixed 元素相对于该父元素定位（而非视口），从而失效
+
+35. 父元素有overflow: hidden，导致sticky失效
+
+36. 多次引入同一组件，但只想要执行一次js
+(function () {
+	if (typeof window.myCountdownFunc === 'undefined') {
+	window.myCountdownFunc = function() {
+       		updateCountdown();
+      		};
+      	window.myCountdownFunc();
+	}
+	function updateCountdown() {}
+})();
+
+37.植入HTML
+  {%- capture cmHtml -%}
+      {%- if settings.cm-icon == 'cm-right-top' -%}
+      <div class="cm-content">
+        <div class="cm-text" style="color: {{ settings.cm_text_color }}">{{ settings.cm_text }}</div>
+        <div style="color: {{ settings.cm_background }}">
+          {%- render 'icon' with 'cm banner', width: 64, height: 64 -%}
+        </div>
+      </div>
+      {%- else -%}
+        <div class="cm-content-bottom" style="background: {{ settings.cm_background }};color: {{ settings.cm_text_color }}">
+          <div class="cm-bottom-text1">{{ settings.cm_text }}</div>
+          <div class="cm-bottom-text2">{{ settings.cmtex2 }}</div>
+          {% comment %} <div class="cm-bottom-text2">only for this set</div> {% endcomment %}
+          
+        </div> 
+      {%- endif -%}
+{%- endcapture -%}
+html:
+{{- cmHtml -}}
+js:
+const cmHtml = {{ cmHtml | json }};
+cmSkuRow[index].insertAdjacentHTML('beforeend', cmHtml);
+
+
+38. 
+height: auto(优先父容器高度)，fit-contnet(仅内容本身高)
+
+39. 响应式
+@media only screen and (min-width: 769px) and (max-width: 1024px) {} 
+@media screen and (max-width: 768px) {}
+
+40
+cart.js
+cart/add
+cart/change(通过 line 编号或变体 ID 批量更新商品数量)
+<pre style="height: 500px; white-space: pre-line;">{{ cart | json }}</pre>
+<pre style="height: 500px; white-space: pre-line;">{{ current_variant | json }}</pre>
+
+
+41. 闪烁文字
+/* background-image: {{ section.settings.tai_text1_bg }};
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation-timing-function: linear;
+    background-size: 300%, 300%;
+    animation-name: stcaGlitter;
+    animation-duration: 3s;
+    animation-iteration-count: infinite; */
+
+    @keyframes stcaGlitter {
+        0% {
+            background-position: 100%;
+        }
+        90%, 100% {
+            background-position: 0%;
+        }
+    }
+
+42. 产品为空判断
+section.settings.ltds_product != nil
+
+43.
+background-image: url('{{ section.settings.lottery-button-image | image_url }}');
+
+44.
+动画移动端scale放大会卡顿，可以放小实现
+45. 产品系列
+{
+      "type": "product_list",
+      "id": "products",
+      "limit": 20,
+      "label": "Manual recommendations",
+      "info": "Replaces automatic recommendations when selected."
+},
+
+45. gsap
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from(".ic-item", {
+      scrollTrigger: {
+        trigger: ".ic-item", // 目标 Section
+        start: "top 80%",  // 当元素到达视口顶部80% 时触发， center center为在视图中心位置，
+        toggleActions: "play none none reset", // 每次进入视口时重新执行
+
+        {% comment %}
+         toggleActions：
+         onEnter - 当滚动进入触发点时
+         onLeave - 当滚动离开触发点时
+         onEnterBack - 当从下方反向滚动回到触发点时
+         onLeaveBack - 当从上方反向滚动离开触发点时
+
+          "play" - 播放动画
+          "pause" - 暂停动画
+          "resume" - 继续动画
+          "reset" - 重置动画到初始状态
+          "restart" - 重新开始动画
+          "complete" - 直接完成动画
+          "reverse" - 反向播放动画
+          "none" - 不执行任何操作
+         {% endcomment %}
+      },
+      opacity: 0,// 初始透明度为0（从完全透明开始）
+      y: 50,// 初始位置在下方50像素(x为水平)
+      duration: 0.5,// 动画持续1秒
+      {% comment %} stagger: 0.2 // 依次触发  {% endcomment %}
+    });
+  });
+</script>
+
+start: "bottom bottom-=100", 动画区间距上下各100， 不设置默认底部
+ end: "top top+=100",不设置默认顶部
+toggleActions: "play none none reverse",进入正放，离开倒放
+
+forEach中index定义延迟，见逐行高亮文字
+yoyo要搭配重复动画使用
+
+46.
+"visible_if": "{{ section.settings.media_type_1 == 'image' }}"  编辑器显示
+
+47. 购物车商品降价排序
+{% assign sorted_cart_items = cart.items | sort: 'price' | reverse %}
+
+48.单个商品折扣明细
+line_level_discount_allocations 
+
+49. 更新url
+const newUrl = new URL(window.location);
+newUrl.searchParams.set('variant', matchedVariant.value);
+window.history.replaceState({}, '', newUrl);
+
+50. 带变体的url默认选中
+<option
+  value="{{ value | escape }}"
+  {% if value == selected_value %}
+    selected="selected"
+  {% endif %}
+>
+  {{ value }}
+</option>
+
+51. cart.items.size， cart.item_count
+52. console.dir() 显示对象的所有属性
+
+53. bootstrap
+hidden-xs hidden-sm pc上显示
+visible-xs visible-sm   m上显示
+
+54. input sttings 添加链接
+[Learn more](https://help.shopify.com/manual/online-store/dynamic-checkout)
+
+55.
+product（title，vendor，description，url，featured_image，collections）
+collection（title，image，description，url，products）
+page（title，url，content）
+article（title，url，author，content，excerpt，comments_count，image）
+blog（title，title）
+
+56. product.featured_image必须加| img_url
+src="{{ product.featured_image | img_url: '70x' }}"
+
+
+57.blocks里加APP
+{
+      "type": "@app"
+ },
+
+动画效果实现规则：
+pc: 固定尺寸，居中
+m: vw
+图由下到上，标题由左到右
+
+wb-au- 新popular sku，新sku text
+wb-in- phtots & intro
+wb-eu- 保持原版twilight-rorate， quick nav初始, 新版show more， 允许缩放
+wb-uk-discount code简洁版， au原版， 3w-us自定义版
+wb-au-产品页折后价格
+3w-us- 新公告栏倒计时
+
+Shopify Spy & Dropshipping - Koala Inspector(查看主题和插件)
+
+ 3w:访问量*转化率1.6%-2%*单价150$,
+
+
+
+
+

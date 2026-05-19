@@ -1,0 +1,224 @@
+url: wokecar.myshopify.com
+password: kobe24
+
+https://admin.shopify.com/（店铺登录）/https://www.shopify.cn/
+https://partners.shopify.com/（登录开发合作者)
+
+1.nvm版本：(node版本有要求）
+nvm use 18.12.0
+
+1.1
+partners.shopify.com（开发者账号）
+
+2.ruby安装：
+2.1 
+
+https://rubyinstaller.org/downloads/
+ruby -v（查看安装成功版本，同Node,安装最新，重新打开窗口）
+gem -v(同npm)
+bundle -v （2.3.8+）
+
+2.2 主题开发
+npm install -g @shopify/cli @shopify/theme（全局安装脚手架）
+npm install -g @shopify/cli@latest @shopify/theme@latest
+
+shopify version(查看版本）
+shopify help（查看其它操作，如更新）
+shopify theme info（查看连接店铺）
+shopify theme list (查看站点店铺 )
+shopify theme init（初始化新主题Dawn，默认，简洁，新建主题）
+
+cd 
+
+shopify theme dev --store woke-demo （woke-demo是商店名，可能等很久）
+
+http://127.0.0.1:9292（连接商店，需要输入商店密码，在店铺页查看密码）
+
+shopify theme push --unpublished （上传主题到商店，需要输入主题名）
+
+shopify theme publish（主题开发完，可以发布，和店铺后台发布作用相同）
+
+npm install -g @shopify/cli@latest
+
+
+ 退出登录
+
+1.REDTIGER Official ： redtiger-dash-cam
+shopify theme dev --store redtiger-dash-cam
+shptka_1b7bb6e5826e7504a41e8aaab5c21515
+theme get --list -p=shptka_1b7bb6e5826e7504a41e8aaab5c21515 -s="redtiger-dash-cam.myshopify.com"
+theme get --password=shptka_1b7bb6e5826e7504a41e8aaab5c21515 --store="redtiger-dash-cam.myshopify.com" --themeid=141738049771
+
+2.wolfboxdashcamera:	wolfboxdashcamera
+shopify theme dev --store  wolfboxdashcamera
+
+shptka_6ada04928c1375f4840476c93b49e492
+
+
+3.3wliners: 
+shopify theme dev --store 3wliners
+shptka_f83788acf5819ed03cbb1d94039be329
+theme get --list -p=shptka_f83788acf5819ed03cbb1d94039be329 -s="3wliners.myshopify.com"
+theme get --password=shptka_f83788acf5819ed03cbb1d94039be329 --store="3wliners.myshopify.com" --themeid=173970719083
+
+3w-uk:
+theme get --list -p=shptka_e0f62503ea0bcd3093baf23c30c20b00 -s="61b983.myshopify.com"
+theme get --password=shptka_e0f62503ea0bcd3093baf23c30c20b00 --store="61b983.myshopify.com" --themeid=167272317212
+
+3w-ca:
+shptka_b29867995058c105e11e38e69ee082a7
+theme get --list -p=shptka_b29867995058c105e11e38e69ee082a7 -s="ca-3w.myshopify.com"
+theme get --password=shptka_b29867995058c105e11e38e69ee082a7 --store="ca-3w.myshopify.com" --themeid=137307652148
+
+4.wolfbox-uk
+shptka_82c4425d5920c23a4a6165745b50ed3a
+wolfbox-uk.myshopify.com
+theme get --list -p=shptka_82c4425d5920c23a4a6165745b50ed3a -s="wolfbox-uk.myshopify.com"
+theme get --password=shptka_82c4425d5920c23a4a6165745b50ed3a --store="wolfbox-uk.myshopify.com" --themeid=166234128667
+
+5.wb-sa
+shptka_e841776f5021da90bf5ba1e35e2b3ad6
+wolfbox-sa.myshopify.com
+theme get --list -p=shptka_e841776f5021da90bf5ba1e35e2b3ad6 -s="wolfbox-sa.myshopify.com"
+theme get --password=shptka_e841776f5021da90bf5ba1e35e2b3ad6 --store="wolfbox-sa.myshopify.com" --themeid=126949326944
+
+6.wb-in
+shptka_976acbf21701f72642ece21bde7faf3b
+wolfbox-in.myshopify.com
+theme get --list -p=shptka_976acbf21701f72642ece21bde7faf3b -s="wolfbox-in.myshopify.com"
+theme get --password=shptka_976acbf21701f72642ece21bde7faf3b --store="wolfbox-in.myshopify.com" --themeid=126949326944
+
+7. wb-eu
+shptka_40ed5fa425f162445ecb58c58048372f
+wolfbox-eu.myshopify.com
+theme get --list -p=shptka_40ed5fa425f162445ecb58c58048372f -s="wolfbox-eu.myshopify.com"
+theme get --password=shptka_40ed5fa425f162445ecb58c58048372f --store="wolfbox-eu.myshopify.com" --themeid=176730440066
+
+8.corp
+328279-30.myshopify.com
+shptka_431dc1ea2f4e8771dace985f56403102
+theme get --list -p=shptka_431dc1ea2f4e8771dace985f56403102 -s="328279-30.myshopify.com"
+theme get --password=shptka_431dc1ea2f4e8771dace985f56403102 --store="328279-30.myshopify.com" --themeid=140158271643
+
+9.wb-de
+wolfbox-de.myshopify.com
+shptka_613fd5b5d0487fd51d0ccb4248443815
+theme get --list -p=shptka_613fd5b5d0487fd51d0ccb4248443815 -s="wolfbox-de.myshopify.com"
+theme get --password=shptka_613fd5b5d0487fd51d0ccb4248443815 --store="wolfbox-de.myshopify.com" --themeid=140158271643
+
+10.wb-b2b
+wolfbox-b2b.myshopify.com
+shptka_febb8cb380f0301ef284c93bf4c2dae0
+theme get --list -p=shptka_febb8cb380f0301ef284c93bf4c2dae0 -s="wolfbox-b2b.myshopify.com"
+theme get --password=shptka_febb8cb380f0301ef284c93bf4c2dae0 --store="wolfbox-b2b.myshopify.com" --themeid=140158271643
+
+11. wb-au
+wolfbox-au.myshopify.com
+shptka_e946016087733496d4e947b5c0fdcdc4
+theme get --list -p=shptka_e946016087733496d4e947b5c0fdcdc4 -s="wolfbox-au.myshopify.com"
+theme get --password=shptka_e946016087733496d4e947b5c0fdcdc4 --store="wolfbox-au.myshopify.com" --themeid=174786052408
+
+12. wb-ca
+shptka_72528e23f5c25488e9cf985a3b919a59
+theme get --list -p=shptka_72528e23f5c25488e9cf985a3b919a59 -s="wolfbox-ca.myshopify.com"
+theme get --password=shptka_72528e23f5c25488e9cf985a3b919a59 --store="wolfbox-ca.myshopify.com" --themeid=174786052408
+
+
+
+
+gem sources -l
+gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
+（https://gems.ruby-china.com/ ，换gem源）
+
+gem update --system ：更新gem
+如果报错：
+gem install rubygems-update
+update_rubygems
+
+gem install bundle 升级Bundle
+bundle init 生成gemfile(可更改source)
+bundle install 生成gemfile.lock
+
+bundle clean --force（bundle升级后，清除之前的遗留）
+gem sources -u（更新source cache）
+
+
+ipconfig /flushdns（刷新dns缓存）
+
+用ruby-china
+
+
+
+http://127.0.0.1:26001/
+http://127.0.0.1:9292/
+
+
+
+使用themekit 本地开发
+1.Powershell(以管理员身份运行，不能用powershell ise)安装Chocolatey
+2.choco install themekit
+3.获取店铺所有主题
+theme get --list -p=shptka_b4e90d7d68a24305bfc420b225ea73a8 -s="wolfboxdashcamera.myshopify.com"
+*： password在店铺后台中安装应用theme-access(发送密码到邮箱，只能查看一次，7天有效) Theme Access
+*：店铺名如果是在powershell中运行，必须加双引号
+4.下载要开发的主题到本地
+theme get --password=shptka_b4e90d7d68a24305bfc420b225ea73a8 --store="wolfboxdashcamera.myshopify.com" --themeid=154655457569
+*：获取所有店铺选择对应的themeid
+5.监听本地文件改动
+theme watch
+*：live: theme watch --allow-live
+*：选择店铺后台对应的主题预览（刷新）
+
+下午5:00以后不要更新线上，如果非要更新，需运营验证之后
+
+redtiger user 令牌 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
+
+
+创建app： https://shopify.dev/docs/apps/build/scaffold-app
+1. node版本要高，大于18.20，目前20.17.0；shopify 版本也要高（npm install -g @shopify/cli@latest）
+2. shopify app init（按推荐执行）
+3. cd my-new-app 
+4. shopify app dev
+连接开发店铺，要等时间较久，可以--reset重置连的开发店铺; 会看到合作者信息，应用名，开发商店
+Preview URL: https://woke24test.myshopify.com/admin/oauth/redirect_from_cli?client_id=caa99ddb058751085636f47190de7104
+GraphiQL URL: http://localhost:3457/graphiql
+5. 按P previe in your browser
+6. 和开发店铺关联 ： install app
+
+
+npm run deploy/shopify app deploy 发布版本（scopes = "write_products, read_orders" 修改后要发布，更新url在合作者后台手动更改发布）
+
+
+npm run prisma migrate dev -- --name add-qrcode-table
+npm run prisma studio
+
+
+3.5 : shopify app generate extension
+
+Checkout UI Extension
+用于自定义 Shopify 的结账页面。适合需要在结账流程中添加自定义功能的应用。
+
+Admin UI Extension
+用于扩展 Shopify 管理后台界面。适合需要在后台提供额外功能或数据展示的应用。
+
+Theme App Extension
+用于向 Shopify 主题添加自定义功能。适合需要在商店前端页面中添加组件或功能的应用。
+
+Product Subscription
+用于实现订阅功能。适合需要提供订阅服务的应用。
+
+Post Purchase Extension
+用于在购买完成后显示自定义界面。适合需要在购买后提供额外服务或信息的应用。
+
+Web Pixel Extension
+
+https://h5.redtigercam.com/
+https://h5.wolfbox.com/qrcode
+光标变方块： 按insert
+
+3w-us： 940万,  uk: 40万英镑（52万）， eu: 30万欧（35万），ca(5万)
+
+https://www.vcopter.com/
+https://fitueyes.com/
+
+window+r,control folders,查看，显示隐藏的文件----
