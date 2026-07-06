@@ -3,9 +3,8 @@ powershell 运行 Set-ExecutionPolicy Restricted -Scope CurrentUser   Y
 
 拖动deepseek 到右边
 
-https://katvr-test.myshopify.com/admin
 www.kat-vr.com
-katvr.myshopify.com
+
 
 clash----tun模式（shopify）&系统代理都开（外网）&规则模式
 
@@ -68,20 +67,12 @@ pnpm build
 
 pnpm-lock.yaml(pnpm), opackage-lock.json(npm)
 
-GW3.0 ：
-https://gitlab.katvr.com/woke/Gateway3-web（密码：woke + qwer1234）
-http://apidoc.katvr.com/login（接口文档）
-
 Gateway_Web.exe运行(Gateway_Web.exe.config中appSettings改url本地调试)
 
 window.chrome.webview.postMessage 发送消息
 window.chrome.webview.hostObjects 暴露接口调用
 
-GW2(qq+QWER1234)
 
-gateway后台
-https://gatewaybackground.katvr.com/ 
-admin + Katvr!@#123
 
 # 显式指定--local，更清晰，避免误操作
 git config --local user.name "你的项目专属用户名"
@@ -90,9 +81,6 @@ git config --local user.email "你的项目专属邮箱"
 vscode重置视图
 Ctrl+Shift+P  View: Reset View Locations
 
-10点走-10点到，24点后走-上午不来
-小周周六-调休（12.30后用）
-周五周六都6点，其余8点
 
 黑五：
 
@@ -111,10 +99,6 @@ ejs打印数据
               console.error('parse menus failed', e);
             }
           </script>
-
-共用邮箱
-soft@katvr.com
-Katvr20150401.sw
 
 alt+d
 地址栏输入cmdnpm
