@@ -101,6 +101,7 @@ ejs打印数据
           </script>
 
 alt+d
-地址栏输入cmdnpm
+地址栏输入cmd npm
 
+笔记本用fn+F12
 
