@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 
+    元字段（Metafields）：Shopify 系统原生对象（商品 / 集合 / 客户 / 订单 / 页面 / 博客）默认字段不够用时，用来额外扩展自定义数据
+    语法：对象.metafields.命名空间.key（Product.metafields.custom.fabric_material）
+
+    元对象（Metafield Object）：包含多个属性，通过元字段挂载元对象（创建元对象，然后产品或集合进行挂载，再到具体产品或集合进行设置）
+
+    结构化数据：输出到网页源码，给搜索引擎爬虫识别，提升SEO（价格、库存、评分、尺码、活动、商品图片、预售信息）
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type":"Product",
+        "name":"Long Formal Evening Gown",
+        "material":"Satin", // 来自元对象 fabric_name
+        "mainEntity": [
+          {%- for item in faq_list -%}
+            {
+              "@type": "Question",
+              "name": {{ item.q | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ item.a | json }}
+              }
+            }
+          {%- endfor -%}
+        ]，
+        "size":["US2","US4","US6"]
+        }
+    </script>
+    -->
+</body>
+</html>

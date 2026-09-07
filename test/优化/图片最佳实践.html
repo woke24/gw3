@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{% comment %}
+  假设 section.settings.image 为后台上传的图片对象
+  widths: 定义需要生成的图片宽度序列
+{% endcomment %}
+{%- if section.settings.image != blank -%}
+  {%- assign img = section.settings.image -%}
+  <img
+    src="{{ img | image_url: width: 1500 }}"
+    srcset="
+      {{ img | image_url: width: 375 }} 375w,
+      {{ img | image_url: width: 550 }} 550w,
+      {{ img | image_url: width: 750 }} 750w,
+      {{ img | image_url: width: 1100 }} 1100w,
+      {{ img | image_url: width: 1500 }} 1500w,
+      {{ img | image_url: width: 2000 }} 2000w
+    "
+    sizes="(max-width: 767px) 100vw, 50vw"
+    width="{{ img.width }}"
+    height="{{ img.height }}"
+    loading="lazy"
+    alt="{{ img.alt | escape }}"
+    class="custom-img-class {{ section.settings.extra_class }}"
+  >
+{%- endif -%}
+
+320,480,640,800,1120,1440,1920
+<!-- fetchpriority="high" 首图 -->
+ <!-- 
+通栏：sizes="(max-width: 767px) 100vw, 50vw"
+两栏：sizes="(max-width: 767px) 100vw, min(50vw, 550px)"
+三栏：sizes="(max-width: 767px) 100vw, min(33.33vw, 550px)"
+小图：sizes="100px"
+多列srcset可写一到三个，避免冗余
+ -->
+<!-- 
+alt="{{ mimg.alt | default: product.title | escape }}"
+{%- assign alt_text = main_img.alt | escape | default: product.title | escape | default: '商品展示图' -%}
+ -->
+
+<!-- 双端 -->
+
+{%- assign img_desktop = section.settings.image_desktop -%}
+{%- assign img_mobile = section.settings.image_mobile -%}
+
+{%- if img_desktop != blank -%}
+  <picture class="hero-picture-wrapper">
+    <!-- 1. 移动端图片源 (当屏幕小于 750px 时生效) -->
+    {%- if img_mobile != blank -%}
+      <source
+        media="(max-width: 767px)"
+        srcset="
+          {{ img_mobile | image_url: width: 375 }} 375w,
+          {{ img_mobile | image_url: width: 550 }} 550w,
+          {{ img_mobile | image_url: width: 750 }} 750w
+        "
+        sizes="100vw"
+      >
+    {%- endif -%}
+
+    <!-- 2. 默认/桌面端图片源 (当屏幕大于等于 750px 时生效) -->
+    <source
+      media="(min-width: 768px)"
+      srcset="
+        {{ img_desktop | image_url: width: 1100 }} 1100w,
+        {{ img_desktop | image_url: width: 1500 }} 1500w,
+        {{ img_desktop | image_url: width: 2000 }} 2000w
+      "
+      sizes="100vw"
+    >
+
+    <!-- 3. 后备 img 标签 (核心配置项) -->
+    <img
+      src="{{ img_desktop | image_url: width: 1500 }}"
+      width="{{ img_desktop.width }}"
+      height="{{ img_desktop.height }}"
+      loading="lazy"
+      alt="{{ img_desktop.alt | escape }}"
+      class="responsive-hero-img"
+      data-device-detect="true"
+      data-responsive="true"
+    >
+  </picture>
+{%- endif -%}
+</body>
+</html>

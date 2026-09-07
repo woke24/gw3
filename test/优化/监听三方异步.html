@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<!-- <script>
+// 黑名单：匹配插件CDN/文件名关键词，按需增减
+const blockList = [
+  'menufrontend',
+  'ecomsend'
+];
+
+// 匹配关键词工具函数
+function sourceIsMatch(str) {
+  return blockList.some(key => str.toLowerCase().includes(key));
+}
+
+// 监听DOM新增节点
+const sourceObserver = new MutationObserver(mutations => {
+  mutations.forEach(mut => {
+    mut.addedNodes.forEach(node => {
+      // 1. 处理第三方JS脚本，自动加defer（无依赖脚本可替换async）
+      if (node.tagName === 'SCRIPT' && node.src) {
+        const src = node.src;
+        if (sourceIsMatch(src) && !node.defer && !node.async) {
+          node.defer = true;
+        }
+      }
+
+      // 2. 处理CSS样式link（remixicon字体等，消除渲染阻塞）
+      if (node.tagName === 'LINK' && node.rel === 'stylesheet' && node.href) {
+        const href = node.href;
+        if (sourceIsMatch(href) && node.media !== 'print') {
+          // 先打印媒体不阻塞渲染，加载完成切换正常显示
+          node.media = 'print';
+          node.onload = () => node.media = 'all';
+          node.onerror = () => node.media = 'all';
+        }
+      }
+
+      // 3. 处理插件动态插入的内联<style>样式（部分App动态注入样式）
+      if (node.tagName === 'STYLE') {
+        const text = node.textContent || '';
+        if (sourceIsMatch(text)) {
+          // 延迟插入DOM，避免首屏阻塞样式
+          const clone = node.cloneNode(true);
+          node.remove();
+          window.addEventListener('DOMContentLoaded', () => {
+            document.head.appendChild(clone);
+          }, {once:true})
+        }
+      }
+    })
+  })
+});
+
+// 全局监听整个文档所有层级DOM变化
+sourceObserver.observe(document.documentElement, {
+  childList: true,
+  subtree: true
+});
+</script> -->
+
+  <script>
+  // 黑名单：匹配插件CDN/文件名关键词，按需增减
+  const blockList = [
+    'menufrontend',
+    'ecomsend'
+  ];
+
+  // 匹配关键词工具函数
+  function sourceIsMatch(str) {
+    return blockList.some(key => str.toLowerCase().includes(key));
+  }
+
+  // 监听DOM新增节点
+  const sourceObserver = new MutationObserver(mutations => {
+    mutations.forEach(mut => {
+      mut.addedNodes.forEach(node => {
+        // 1. 处理第三方JS脚本，自动加defer（无依赖脚本可替换async）
+        if (node.tagName === 'SCRIPT' && node.src) {
+          const src = node.src;
+          if (sourceIsMatch(src) && !node.defer && !node.async) {
+            node.defer = true;
+          }
+        }
+
+        // 2. 处理CSS样式link（remixicon字体等，消除渲染阻塞）
+        if (node.tagName === 'LINK' && node.rel === 'stylesheet' && node.href) {
+          const href = node.href;
+          if (sourceIsMatch(href) && node.media !== 'print') {
+            // 先打印媒体不阻塞渲染，加载完成切换正常显示
+            node.media = 'print';
+            node.onload = () => node.media = 'all';
+            node.onerror = () => node.media = 'all';
+          }
+        }
+
+        // 3. 处理插件动态插入的内联<style>样式（部分App动态注入样式）
+        if (node.tagName === 'STYLE') {
+          const text = node.textContent || '';
+          if (sourceIsMatch(text)) {
+            // 延迟插入DOM，避免首屏阻塞样式
+            const clone = node.cloneNode(true);
+            node.remove();
+            window.addEventListener('DOMContentLoaded', () => {
+              document.head.appendChild(clone);
+            }, {once:true})
+          }
+        }
+      })
+    })
+  });
+
+  // 全局监听整个文档所有层级DOM变化
+  sourceObserver.observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+  </script>
+</head>
+<body>
+    
+</body>
+</html>

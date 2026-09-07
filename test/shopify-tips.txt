@@ -94,7 +94,7 @@ wb二合一动画： video-media .object-fill
 "class": "shopify-section--ts-multi",
   "tag": "section",
 
-19. srcset获取不同分辨率的图片，如果图片800宽，加上800选项，是按800的尺寸进行重渲染
+19. srcset获取不同分辨率的图片，如果图片800宽，加上800选项，是按800的尺寸进行重渲染，可以写多个source（移动端pdr为2）【sizes也可以设置多个】
 <source
                         media="(max-width: 768px)"
                         srcset="{{ block.settings.ts_product_img1_m | image_url: width: 400 }} 400w, {{ block.settings.ts_product_img1_m | image_url: width: 600 }} 600w, {{ block.settings.ts_product_img1_m | image_url: width: 800 }} 800w"
@@ -462,6 +462,50 @@ src="{{ product.featured_image | img_url: '70x' }}"
 {
       "type": "@app"
  },
+
+58，
+img，video, iframe{
+      max-inline-size: 100%;
+      block-size: auto;
+      object-fit: cover;
+    }
+
+59,结构化数据(wokecar)
+格式参考：
+{%- assign faq_list = product.metafields.custom.product_faqs.value -%}
+   <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {%- for item in faq_list -%}
+            {
+              "@type": "Question",
+              "name": {{ item.q | json }},
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": {{ item.a | json }}
+              }
+            }
+		{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      }
+    </script>
+查看某项：{{ product.metafields.custom.faq | json }}
+查看所有：
+<script>
+  document.querySelectorAll('script[type="application/ld+json"]').forEach((script, index) => {
+  try {
+    console.log(`=== 结构化数据 #${index + 1} ===`, JSON.parse(script.textContent));
+  } catch (e) {
+    console.error(`=== 结构化数据 #${index + 1} 语法解析错误 (JSON 格式损坏) ===`, e);
+  }
+});
+</script>
+
+60. 多变体集中权重，视为同一页面
+<link rel="canonical" href="{{ canonical_url }}" />
 
 动画效果实现规则：
 pc: 固定尺寸，居中
