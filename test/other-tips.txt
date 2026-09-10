@@ -93,3 +93,27 @@ offset
 limit
 view
 
+vpn: SakuraCat
+lr001@lingrongkeji.com
+lr0012026
+
+git config --global user.name "你的姓名/公司名"
+git config --global user.email "你的企业邮箱"
+
+git config --local user.name "你的项目专属用户名"
+git config --local user.email "你的项目专属邮箱"
+
+参考品牌：
+https://www.anker.com/
+https://global.dreametech.com/
+https://www.dji.com/
+https://www.ecovacs.com/us/shop
+https://store.insta360.com/
+
+主题地址：https://themes.shopify.com/
+google： SPY扩展
+
+shopify theme pull --store=
+shopify theme dev --store=
+shopify theme push --store=
+
